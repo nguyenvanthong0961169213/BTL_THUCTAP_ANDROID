@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+            <variable
+                name="LoginViewModel"
+                type="com.example.bt_android_thuctap.viewmodel.LoginViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".SignInFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/night_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/night_background" />
+
+            <View
+                android:id="@+id/day_bạckground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/day_background" />
+
+            <ImageView
+                android:id="@+id/sun"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/sun"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="-10dp" />
+
+            <LinearLayout
+                android:id="@+id/lnl_view_Sky"
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <ImageView
+                    android:id="@+id/cloud_1"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/cloud_1" />
+
+                <ImageView
+                    android:id="@+id/cloud_2"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/cloud_2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnl_logo_app"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/lnl_view_Sky"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp">
+
+                <ImageView
+                    android:layout_width="180dp"
+                    android:layout_height="140dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/logo_app" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/text_w6" />
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/text_chat" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnl_user_password"
+                android:layout_width="match_parent"
+                android:layout_height="290dp"
+                android:layout_below="@id/lnl_logo_app"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/edt_PhoneNumber"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Phone"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_phonenumber_signin"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="@string/string_hint_phone"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:text="@={LoginViewModel.phoneNumber}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/edt_PhoneNumber"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/string_hint_password"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edt_Password"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_text_login"
+                    android:hint="********"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:text="@={LoginViewModel.password}" />
+
+
+                <TextView
+                    android:id="@+id/txt_forget_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="55dp"
+                    android:text="forget your password?"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:layout_width="3dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:text="@{LoginViewModel.validate}"
+                    android:textSize="20dp" />
+
+
+                <Button
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/btn_signin"
+                    android:onClick="@{() -> LoginViewModel.Onclick()}"
+                    android:text="@string/string_btn_signin"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnl_user_password"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don'n have an account?"
+                    android:textSize="18dp" />
+
+                <Button
+                    android:id="@+id/btn_createaccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_nocolor"
+                    android:text="Create"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.mahfa.dnswitch.DayNightSwitch
+                android:id="@+id/day_night_switch"
+                android:layout_width="76dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp" />
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>
