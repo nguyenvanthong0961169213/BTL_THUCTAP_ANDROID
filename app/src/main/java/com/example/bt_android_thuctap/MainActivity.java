@@ -5,8 +5,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.mahfa.dnswitch.DayNightSwitch;
 
 public class MainActivity extends AppCompatActivity {
+
 
     private ViewPager viewPager;
     @Override
@@ -19,4 +24,5 @@ public class MainActivity extends AppCompatActivity {
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerLoginAdapter);
     }
+
 }

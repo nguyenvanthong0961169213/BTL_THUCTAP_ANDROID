@@ -36,7 +36,6 @@ public class LoginViewModel extends BaseObservable {
     }
     public void Onclick() {
         Login user = new Login(getPhoneNumber(), getPassword());
-        setPhoneNumber("1111");
         if (user.isValidPhone() && user.isValidPassWord()) {
             validate.set("thanh cong");
         } else {

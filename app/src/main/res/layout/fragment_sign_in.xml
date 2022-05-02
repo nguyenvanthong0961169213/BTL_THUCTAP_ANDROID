@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@drawable/edit_text_login"
-                    android:hint="********"
+                    android:hint="@string/string_hint_password"
                     android:inputType="textPassword"
                     android:padding="10dp"
                     android:text="@={LoginViewModel.password}" />
@@ -153,11 +153,11 @@
                     android:textSize="17dp" />
 
                 <TextView
-                    android:layout_width="3dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:textColor="@color/black"
                     android:text="@{LoginViewModel.validate}"
+                    android:textColor="@color/black"
                     android:textSize="20dp" />
 
 
@@ -197,7 +197,6 @@
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </LinearLayout>
-
             <com.mahfa.dnswitch.DayNightSwitch
                 android:id="@+id/day_night_switch"
                 android:layout_width="76dp"
