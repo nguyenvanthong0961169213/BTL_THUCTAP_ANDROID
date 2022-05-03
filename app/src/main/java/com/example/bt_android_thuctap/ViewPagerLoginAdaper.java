@@ -17,16 +17,16 @@ public class ViewPagerLoginAdaper extends FragmentStatePagerAdapter {
         switch (position)
         {
             case 0:
+                return new SignInFragment();
+            case 1:
                 return new SignUpFragment();
-//            case 1:
-//                return new SignUpFragment();
             default:
-                return new SignUpFragment();
+                return new SignInFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }

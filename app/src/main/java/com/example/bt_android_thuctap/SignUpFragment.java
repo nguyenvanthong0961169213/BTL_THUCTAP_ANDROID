@@ -35,10 +35,10 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.fragment_sign_up, container, false);
         // Inflate the layout for this fragment
-        FragmentSignUpBinding fragmentSignUpBinding = DataBindingUtil.setContentView(getActivity(),
-                R.layout.fragment_sign_up);
-        LoginViewModel loginViewModel = new LoginViewModel();
-        fragmentSignUpBinding.setLoginViewModel(loginViewModel);
+//        FragmentSignUpBinding fragmentSignUpBinding = DataBindingUtil.setContentView(getActivity(),
+//                R.layout.fragment_sign_up);
+//        LoginViewModel loginViewModel = new LoginViewModel();
+//        fragmentSignUpBinding.setLoginViewModel(loginViewModel);
         return mView;
     }
 }
