@@ -27,7 +27,7 @@ public class SignInFragment extends Fragment {
     ImageView sun;
     View daybackground, nightbackground;
     DayNightSwitch dayNightSwitch;
-    FragmentSignInBinding fragmentSignInBinding;
+    private FragmentSignInBinding fragmentSignInBinding;
     public SignInFragment() {
     }
     public static SignInFragment newInstance() {
@@ -45,10 +45,9 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mview= inflater.inflate(R.layout.fragment_sign_in, container, false);
+        fragmentSignInBinding = FragmentSignInBinding.inflate(inflater, container, false);
         //SwitchIsDark();
-        /*fragmentSignInBinding = DataBindingUtil.setContentView(getActivity(),
-                R.layout.fragment_sign_in);
+        View view = fragmentSignInBinding.getRoot();
         LoginViewModel loginViewModel = new LoginViewModel();
         fragmentSignInBinding.setLoginViewModel(loginViewModel);
         fragmentSignInBinding.dayNightSwitch.setListener(new DayNightSwitchListener() {
@@ -62,9 +61,16 @@ public class SignInFragment extends Fragment {
                     fragmentSignInBinding.dayBCkground.animate().alpha(1).setDuration(1300);
                 }
             }
-        });*/
-        return mview;
+        });
+        return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        fragmentSignInBinding = null;
+    }
+
     public void SwitchIsDark(){
         fragmentSignInBinding = DataBindingUtil.setContentView(getActivity(),
                 R.layout.fragment_sign_in);

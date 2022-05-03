@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager=findViewById(R.id.view_pager_login);
-        ViewPagerLoginAdaper viewPageLoginAdapter = new ViewPagerLoginAdaper(getSupportFragmentManager(),
+        ViewPagerLoginAdaper viewPageLoginAdapter = new ViewPagerLoginAdaper(
+                getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPageLoginAdapter);
 
