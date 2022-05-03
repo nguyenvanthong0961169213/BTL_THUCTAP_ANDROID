@@ -6,9 +6,13 @@
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/btn_nocolor.xml" value="0.18703703703703703" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/btn_signin.xml" value="0.2037037037037037" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/btn_signup.xml" value="0.2037037037037037" />
+        <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/ic_logput.xml" value="0.2064814814814815" />
+        <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/layout/activity_layout_home.xml" value="0.25" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/layout/fragment_sign_in.xml" value="0.25" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/layout/fragment_sign_up.xml" value="0.25" />
+        <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/layout/layout_header_navigation.xml" value="0.25" />
+        <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/menu/menu_navigation.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

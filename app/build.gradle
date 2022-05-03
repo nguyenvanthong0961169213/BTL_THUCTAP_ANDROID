@@ -40,4 +40,7 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.Mahfa:DayNightSwitch:1.5'
+
+    def fragment_version = "1.4.1"
+    implementation "androidx.fragment:fragment:$fragment_version"
 }

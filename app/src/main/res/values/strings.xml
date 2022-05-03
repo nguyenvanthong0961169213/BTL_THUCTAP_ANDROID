@@ -13,5 +13,14 @@
     <string name="string_and">and </string>
     <string name="string_privacy_policy">Privacy Policy </string>
     <string name="string_btn_signup">Sign Up</string>
+    <!--Navigation-->
+    <string name="String_navigation_home">Home</string>
+    <string name="String_navigation_my_profile">My_Profile</string>
+    <string name="String_navigation_change_password">Change_Password</string>>
+    <string name="String_navigation_log_out">Logout</string>
+    <string name="String_address">Address</string>
+    <string name="String_sex">Sex</string>
+    <string name="String_birthday">Birthday</string>
+    <string name="String_navigation_fragment">Navigation</string>
 
 </resources>

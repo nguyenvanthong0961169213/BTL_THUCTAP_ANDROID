@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class ViewPagerLoginAdaper extends FragmentStatePagerAdapter {
+
     public ViewPagerLoginAdaper(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
@@ -18,7 +19,7 @@ public class ViewPagerLoginAdaper extends FragmentStatePagerAdapter {
             case 0:
                 return new SignInFragment();
 //            case 1:
-//                return new Sign_Up_Fragment();
+//                return new SignUpFragment();
             default:
                 return new SignInFragment();
         }
