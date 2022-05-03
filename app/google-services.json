@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "911377651093",
+    "project_id": "w6chat",
+    "storage_bucket": "w6chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911377651093:android:5b1144f7bdce355339929c",
+        "android_client_info": {
+          "package_name": "com.example.bt_android_thuctap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911377651093-hgd9lncu2u9hs55eaeht6dt3g6oat7ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bt_android_thuctap",
+            "certificate_hash": "854f4d23b52b840c1bb51e9fd3a8bc945a120d64"
+          }
+        },
+        {
+          "client_id": "911377651093-tfvf7v76vi13vdc24tiqjp6bts04uqu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3f2s2zem6lbMuM_qt9VW6FWarxomuA8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911377651093-tfvf7v76vi13vdc24tiqjp6bts04uqu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
