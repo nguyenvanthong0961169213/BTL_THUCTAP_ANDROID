@@ -27,16 +27,18 @@ public class SignInFragment extends Fragment {
     ImageView sun;
     View daybackground, nightbackground;
     DayNightSwitch dayNightSwitch;
+    FragmentSignInBinding fragmentSignInBinding;
     public SignInFragment() {
-        // Required empty public constructor
     }
     public static SignInFragment newInstance() {
         SignInFragment fragment = new SignInFragment();
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -44,8 +46,27 @@ public class SignInFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mview= inflater.inflate(R.layout.fragment_sign_in, container, false);
-
-        FragmentSignInBinding fragmentSignInBinding = DataBindingUtil.setContentView(getActivity(),
+        //SwitchIsDark();
+        /*fragmentSignInBinding = DataBindingUtil.setContentView(getActivity(),
+                R.layout.fragment_sign_in);
+        LoginViewModel loginViewModel = new LoginViewModel();
+        fragmentSignInBinding.setLoginViewModel(loginViewModel);
+        fragmentSignInBinding.dayNightSwitch.setListener(new DayNightSwitchListener() {
+            @Override
+            public void onSwitch(boolean is_night) {
+                if (is_night) {
+                    fragmentSignInBinding.sun.animate().translationY(30).setDuration(1000);
+                    fragmentSignInBinding.dayBCkground.animate().alpha(0).setDuration(1300);
+                } else {
+                    fragmentSignInBinding.sun.animate().translationY(-30).setDuration(1000);
+                    fragmentSignInBinding.dayBCkground.animate().alpha(1).setDuration(1300);
+                }
+            }
+        });*/
+        return mview;
+    }
+    public void SwitchIsDark(){
+        fragmentSignInBinding = DataBindingUtil.setContentView(getActivity(),
                 R.layout.fragment_sign_in);
         LoginViewModel loginViewModel = new LoginViewModel();
         fragmentSignInBinding.setLoginViewModel(loginViewModel);
@@ -61,8 +82,5 @@ public class SignInFragment extends Fragment {
                 }
             }
         });
-        return mview;
     }
-
-
 }
