@@ -4,13 +4,13 @@
     <item android:title="@string/String_navigation_fragment">
         <menu>
             <group android:checkableBehavior="single">
-                <item android:id="@+id/navigation_home_app"
+                <item android:id="@+id/navigation_home"
                     android:title="@string/String_navigation_home"
                     android:icon="@drawable/ic_home"/>
-                <item android:id="@+id/navigation_update_info_user"
+                <item android:id="@+id/navigation_update_profile"
                     android:title="@string/String_navigation_my_profile"
                     android:icon="@drawable/ic_profile"/>
-                <item android:id="@+id/navigation_update_password"
+                <item android:id="@+id/navigation_change_password"
                     android:title="@string/String_navigation_change_password"
                     android:icon="@drawable/ic_lock"/>
                 <item android:id="@+id/navigation_logout"
