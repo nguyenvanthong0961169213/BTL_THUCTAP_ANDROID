@@ -22,11 +22,7 @@ import com.mahfa.dnswitch.DayNightSwitchListener;
 
 public class SignInFragment extends Fragment {
 
-    private View mview;
-    private Button btn_signup;
-    ImageView sun;
-    View daybackground, nightbackground;
-    DayNightSwitch dayNightSwitch;
+     private FragmentSignInBinding fragmentSignInBinding;
     public SignInFragment() {
         // Required empty public constructor
     }
@@ -43,10 +39,9 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mview= inflater.inflate(R.layout.fragment_sign_in, container, false);
+        fragmentSignInBinding= FragmentSignInBinding.inflate(inflater, container, false);
+        View mview=fragmentSignInBinding.getRoot();
 
-        FragmentSignInBinding fragmentSignInBinding = DataBindingUtil.setContentView(getActivity(),
-                R.layout.fragment_sign_in);
         LoginViewModel loginViewModel = new LoginViewModel();
         fragmentSignInBinding.setLoginViewModel(loginViewModel);
         fragmentSignInBinding.dayNightSwitch.setListener(new DayNightSwitchListener() {

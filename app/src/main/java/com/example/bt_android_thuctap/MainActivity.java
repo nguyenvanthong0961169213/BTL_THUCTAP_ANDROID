@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        viewPager=findViewById(R.id.view_pager_login);
-//        ViewPagerLoginAdaper viewPageLoginAdapter=new ViewPagerLoginAdaper(getSupportFragmentManager(),
-//                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-//        viewPager.setAdapter(viewPageLoginAdapter);
-        Intent intent=new Intent(this,Layout_Home.class);
-        startActivity(intent);
+        viewPager=findViewById(R.id.view_pager_login);
+        ViewPagerLoginAdaper viewPageLoginAdapter=new ViewPagerLoginAdaper(getSupportFragmentManager(),
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        viewPager.setAdapter(viewPageLoginAdapter);
+//        Intent intent=new Intent(this,Layout_Home.class);
+//        startActivity(intent);
     }
 }
