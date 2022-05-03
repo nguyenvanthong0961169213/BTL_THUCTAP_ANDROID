@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BTL_TT/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_in.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL_TT/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_up.xml" value="0.20416666666666666" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/btn_nocolor.xml" value="0.18703703703703703" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/btn_signin.xml" value="0.2037037037037037" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/btn_signup.xml" value="0.2037037037037037" />
