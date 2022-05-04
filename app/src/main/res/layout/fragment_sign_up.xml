@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="LoginViewModel"
+            type="com.example.bt_android_thuctap.viewmodel.LoginViewModel" />
+    </data>
+
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUpFragment">
@@ -43,6 +50,7 @@
             android:paddingLeft="20dp"
             android:drawableEnd="@drawable/ic_phone"
             android:paddingRight="15dp"
+            android:text="@={LoginViewModel.phoneNumber}"
             />
 
         <TextView
@@ -64,7 +72,8 @@
             android:hint="@string/string_hint_password"
             android:paddingLeft="20dp"
             android:drawableRight="@drawable/ic_lock_2"
-            android:paddingEnd="15dp"/>
+            android:paddingEnd="15dp"
+            android:text="@={LoginViewModel.password}"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,7 +94,8 @@
             android:hint="@string/string_hint_password"
             android:paddingLeft="20dp"
             android:drawableRight="@drawable/ic_lock"
-            android:paddingEnd="15dp"/>
+            android:paddingEnd="15dp"
+            android:text="@={LoginViewModel.RePassword}"/>
          <LinearLayout
              android:layout_marginTop="10dp"
              android:layout_width="match_parent"
@@ -138,13 +148,22 @@
                      android:textStyle="bold"/>
              </LinearLayout>
          </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@{LoginViewModel.validate}"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
         <Button
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/btn_signup"
             android:text="@string/string_btn_signup"
+            android:onClick="@{() -> LoginViewModel.OnClickSignUp()}"
             android:textColor="@color/white"
             android:textSize="18dp" />
         <LinearLayout
@@ -177,3 +196,4 @@
     </LinearLayout>
 
 </FrameLayout>
+</layout>
