@@ -44,32 +44,25 @@ public class SignInFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mview= inflater.inflate(R.layout.fragment_sign_in, container, false);
-        Connect_ID();
+
         FragmentSignInBinding fragmentSignInBinding = DataBindingUtil.setContentView(getActivity(),
                 R.layout.fragment_sign_in);
         LoginViewModel loginViewModel = new LoginViewModel();
         fragmentSignInBinding.setLoginViewModel(loginViewModel);
-        dayNightSwitch.setListener(new DayNightSwitchListener() {
+        fragmentSignInBinding.dayNightSwitch.setListener(new DayNightSwitchListener() {
             @Override
             public void onSwitch(boolean is_night) {
                 if (is_night) {
-                    sun.animate().translationY(30).setDuration(1000);
-                    daybackground.animate().alpha(0).setDuration(1300);
+                    fragmentSignInBinding.sun.animate().translationY(30).setDuration(1000);
+                    fragmentSignInBinding.dayBCkground.animate().alpha(0).setDuration(1300);
                 } else {
-                    sun.animate().translationY(-30).setDuration(1000);
-                    daybackground.animate().alpha(1).setDuration(1300);
+                    fragmentSignInBinding.sun.animate().translationY(-30).setDuration(1000);
+                    fragmentSignInBinding.dayBCkground.animate().alpha(1).setDuration(1300);
                 }
             }
         });
         return mview;
     }
 
-    void Connect_ID()
-    {
-        sun=mview.findViewById(R.id.sun);
-        daybackground=mview.findViewById(R.id.day_bạckground);
-        nightbackground=mview.findViewById(R.id.night_background);
-        dayNightSwitch=mview.findViewById(R.id.day_night_switch);
-        btn_signup=mview.findViewById(R.id.btn_createaccount);
-    }
+
 }
