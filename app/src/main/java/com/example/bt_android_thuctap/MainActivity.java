@@ -23,7 +23,11 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerLoginAdaper viewPageLoginAdapter=new ViewPagerLoginAdaper(getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPageLoginAdapter);
-//        Intent intent=new Intent(this,Layout_Home.class);
-//        startActivity(intent);
+
+    }
+
+    public void chuyen(){
+        Intent intent=new Intent(this,Layout_Home.class);
+       startActivity(intent);
     }
 }
