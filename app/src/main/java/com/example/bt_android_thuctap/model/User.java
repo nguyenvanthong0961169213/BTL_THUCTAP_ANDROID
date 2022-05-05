@@ -3,7 +3,7 @@ package com.example.bt_android_thuctap.model;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-public class Login {
+public class User {
     //Attributes
     private String Name;
     private String PhoneNumber;
@@ -18,7 +18,7 @@ public class Login {
     }
 
     //Contructer
-    public Login(String phoneNumber, String password,String name) {
+    public User(String phoneNumber, String password, String name) {
         PhoneNumber = phoneNumber;
         Password = password;
         Name = name;

@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPageLoginAdapter);
 
+
     }
 
     public void chuyen(){

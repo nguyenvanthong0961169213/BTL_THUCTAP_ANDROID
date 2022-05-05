@@ -22,7 +22,8 @@ import com.mahfa.dnswitch.DayNightSwitchListener;
 
 public class SignInFragment extends Fragment {
 
-     private FragmentSignInBinding fragmentSignInBinding;
+
+    private FragmentSignInBinding fragmentSignInBinding;
     public SignInFragment() {
         // Required empty public constructor
     }
