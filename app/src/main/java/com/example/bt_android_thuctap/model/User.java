@@ -3,15 +3,11 @@ package com.example.bt_android_thuctap.model;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class User {
     //Attributes
     private String Name;
     private String PhoneNumber;
     private String Password;
-
 
     public String getName() {
         return Name;
@@ -41,8 +37,8 @@ public class User {
         return Password;
     }
 
-    public void setPassword(String password) { Password = password; }
-
-
+    public void setPassword(String password) {
+        Password = password;
+    }
 
 }
