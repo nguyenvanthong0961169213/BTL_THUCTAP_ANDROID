@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 //import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
+import com.example.bt_android_thuctap.databinding.UserContainerBinding;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
 import com.mahfa.dnswitch.DayNightSwitch;
 import com.mahfa.dnswitch.DayNightSwitchListener;
@@ -38,6 +39,7 @@ public class SignInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        UserContainerBinding userContainerBinding;
         // Inflate the layout for this fragment
         fragmentSignInBinding= FragmentSignInBinding.inflate(inflater, container, false);
         View mview=fragmentSignInBinding.getRoot();
