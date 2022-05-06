@@ -72,69 +72,8 @@ public class LoginViewModel extends BaseObservable {
         notifyPropertyChanged(BR.password);
     }
 
-    public void Onclick()
-    {
-
-       firebaseFirestore = FirebaseFirestore.getInstance();
-       firebaseFirestore.collection("User").whereEqualTo("phone",PhoneNumber)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot doc : task.getResult()){
-                             /*   validate.set("Dang nhap thanh cong");*/
-                                Log.d("String",""+doc.getData());
-                                if(Objects.equals(Password,doc.get("password").toString())){
-                                       validate.set("Dang nhap thanh cong");
-//                                       PhoneNumber = doc.get("phone").toString();
-                                   //   name = doc.get("name").toString();
-//                                    MainActivity A = new MainActivity();
-//                                    A.chuyen();
-//                                      OnAtt
-
-                                }
 
 
-                            }
-                        }
-                    }
-                });
-
-
-        /*if (isValidPhone(PhoneNumber) && isValidPassWord(Password)) {
-            if(Objects.equals(PhoneNumber,phone)&& Objects.equals(Password,password)){
-
-                Login user = new Login(phone,name,password);
-
-
-                validate.set("sai tai khoan hoac mat khau");
-            }
-
-        } else {
-            validate.set("Vui long dien lai dinh dang");
-        }*/
-    }
-    public void OnClickSignUp(){
-        /*Login user = new Login(getPhoneNumber(), getPassword());*/
-      /*  if (user.isValidPhone() && user.isValidPassWord() && getPassword().equals(RePassword.get().toString()) ) {
-            validate.set("thanh cong");
-        } else {
-            validate.set("that bai");
-        }*/
-    }
-    public boolean isValidPhone(String str){
-        Pattern ptrn = Pattern.compile("(0/91)?[7-9][0-9]{9}");
-        Matcher match = ptrn.matcher(str);
-        return (match.find() && match.group().equals(str));
-    }
-
-    public boolean isValidPassWord(String str){
-        if(str.length()>=6){
-            return true;
-
-        }
-        return false;
-    }
 
 
 }

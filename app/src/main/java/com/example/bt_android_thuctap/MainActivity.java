@@ -26,8 +26,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void chuyen(){
-        Intent intent=new Intent(this,Layout_Home.class);
-       startActivity(intent);
-    }
+
 }
