@@ -150,20 +150,22 @@
          </LinearLayout>
 
         <TextView
+            android:id="@+id/txtValidateSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@{LoginViewModel.validate}"
+            android:text="@={LoginViewModel.validate}"
             android:textColor="@color/black"
             android:textSize="20dp" />
+
         <Button
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:id="@+id/btn_SignUp1"
+            android:layout_width="247dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:background="@drawable/btn_signup"
             android:text="@string/string_btn_signup"
-            android:onClick="@{() -> LoginViewModel.OnClickSignUp()}"
             android:textColor="@color/white"
             android:textSize="18dp" />
         <LinearLayout
