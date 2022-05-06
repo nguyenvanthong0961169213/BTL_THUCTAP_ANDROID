@@ -12,6 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+
         android:layout_height="match_parent">
 
 
@@ -29,17 +30,21 @@
             android:layout_marginStart="1dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+
+            app:layout_constraintStart_toEndOf="@+id/img_usercontainer"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textNameDisplay"
+                android:id="@+id/txtNameUserContainer"
+
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:text="Name" />
 
             <TextView
-                android:id="@+id/textChat"
+
+                android:id="@+id/txtChatUserContainer"
+
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:text="Chat" />

@@ -1,7 +1,7 @@
 package com.example.bt_android_thuctap.Common;
 
-import com.example.bt_android_thuctap.model.Login;
+import com.example.bt_android_thuctap.model.User;
 
 public class Common {
-    public static Login user;
+    public static User user;
 }
