@@ -6,7 +6,7 @@ import android.util.Patterns;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Login {
+public class User {
     //Attributes
     private String Name;
     private String PhoneNumber;
@@ -22,7 +22,7 @@ public class Login {
     }
 
     //Contructer
-    public Login(String phoneNumber, String password,String name) {
+    public User(String phoneNumber, String password, String name) {
         PhoneNumber = phoneNumber;
         Password = password;
         Name = name;
@@ -43,18 +43,6 @@ public class Login {
 
     public void setPassword(String password) { Password = password; }
 
-//    public boolean isValidPhone(){
-//        Pattern ptrn = Pattern.compile("(0/91)?[7-9][0-9]{9}");
-//        Matcher match = ptrn.matcher(getPhoneNumber());
-//        return (match.find() && match.group().equals(getPhoneNumber()));
-//    }
 
-    public boolean isValidPassWord(){
-        if(getPassword().length()>=6){
-            return true;
-
-        }
-        return false;
-    }
 
 }
