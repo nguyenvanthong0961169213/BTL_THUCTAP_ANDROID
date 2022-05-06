@@ -10,8 +10,13 @@ public class PreferenceManager {
         sharedPreferences = context.getSharedPreferences(Constants.key_Pre_Name,Context.MODE_PRIVATE);
     }
 
-    public Boolean putBoolean(String key,boolean value){
+    public Boolean getBoolean(String key){
         return sharedPreferences.getBoolean(key,false);
+    }
+    public void putBoolean(String key,Boolean value){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key,value);
+        editor.apply();
     }
 
     public void putString(String key,String value){

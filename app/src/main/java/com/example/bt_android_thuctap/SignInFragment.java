@@ -20,10 +20,13 @@ import android.widget.ImageView;
 //import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
+import com.example.bt_android_thuctap.util.Constants;
+import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,7 +36,7 @@ import com.mahfa.dnswitch.DayNightSwitchListener;
 import java.util.Objects;
 
 public class SignInFragment extends Fragment {
-
+    private PreferenceManager preferenceManager;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     LoginViewModel loginViewModel;
@@ -48,6 +51,13 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        if(preferenceManager.getBoolean(Constants.key_Is_Sign_In)){
+            Intent intent = new Intent(getActivity(),Layout_Home.class);
+            startActivity(intent);
+
+        }
+
     }
 
     @Override
@@ -80,24 +90,23 @@ public class SignInFragment extends Fragment {
     public void SignInClick() {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore.collection("User").whereEqualTo("phone",loginViewModel.getPhoneNumber())
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot doc : task.getResult()){
-                        /*   validate.set("Dang nhap thanh cong");*/
-                        Log.d("String",""+doc.getData());
-                        if(Objects.equals(loginViewModel.getPassword(),doc.get("password").toString())){
-                            Intent intent = new Intent(getActivity(),Layout_Home.class);
-                            startActivity(intent);
-
-                        }
-                    }
-//                    loginViewModel.validate.set("Đăng nhập thất bại");
-
-                }
+                .whereEqualTo("password",loginViewModel.getPassword()).get().addOnCompleteListener(task -> {
+            if(task.isSuccessful() && task.getResult()!= null && task.getResult().getDocuments().size()>0){
+                DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                preferenceManager.putBoolean(Constants.key_Is_Sign_In,true);
+                preferenceManager.putString(Constants.key_UserId,documentSnapshot.getId());
+                preferenceManager.putString(Constants.key_Name,documentSnapshot.getString(Constants.key_Name));
+                preferenceManager.putString(Constants.key_Phone,documentSnapshot.getString(Constants.key_Phone));
+                loginViewModel.validate.set("Dang nhap thanh cong");
+                Intent intent = new Intent(getActivity(),Layout_Home.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+            else{
+                loginViewModel.validate.set("Dang nhap that bai");
             }
         });
+
     }
 
     public void  CreateAccountClick(){

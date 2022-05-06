@@ -74,7 +74,8 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
             Log.e("TAG", "setUserData: hahahah" );
             biding.imgUsercontainer.setImageResource(R.drawable.ic_lock);
             biding.txtNameUserContainer.setText(user.getName());
-            biding.txtChatUserContainer.setText("hohoh");
+
+        /*    biding.txtChatUserContainer.setText("hohoh");*/
             Log.e("TAG", "setUserData: hahahah" );
         }
     }
