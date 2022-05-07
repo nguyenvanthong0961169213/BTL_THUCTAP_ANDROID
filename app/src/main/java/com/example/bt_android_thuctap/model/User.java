@@ -6,7 +6,7 @@ import android.util.Patterns;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Login {
+public class User {
     //Attributes
     private String Name;
     private String PhoneNumber;
@@ -22,7 +22,7 @@ public class Login {
     }
 
     //Contructer
-    public Login(String phoneNumber, String password,String name) {
+    public User(String phoneNumber, String password, String name) {
         PhoneNumber = phoneNumber;
         Password = password;
         Name = name;

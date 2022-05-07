@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +71,7 @@ public class SignInFragment extends Fragment {
             }
         });
         fragmentSignInBinding.btnSignin.setOnClickListener(v-> SignInClick());
+        fragmentSignInBinding.btnCreateaccount.setOnClickListener(v-> CreateAccountClick());
         return mview;
     }
 
@@ -89,11 +91,17 @@ public class SignInFragment extends Fragment {
 
                         }
                     }
-                    loginViewModel.validate.set("Đăng nhập thất bại");
+//                    loginViewModel.validate.set("Đăng nhập thất bại");
 
                 }
             }
         });
+    }
+
+    public void  CreateAccountClick(){
+        FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.view_pager_login,SignUpFragment.newInstance());
+        transaction.commit();
     }
 
 
