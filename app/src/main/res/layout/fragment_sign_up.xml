@@ -40,6 +40,7 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/phoneSignUp"
             android:layout_width="360dp"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
@@ -64,6 +65,7 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/passwordSignUp"
             android:layout_width="360dp"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
@@ -86,6 +88,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/rePasswordSignUp"
             android:layout_width="360dp"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
