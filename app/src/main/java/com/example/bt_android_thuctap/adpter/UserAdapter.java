@@ -10,10 +10,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bt_android_thuctap.FragmentSceneChat;
 import com.example.bt_android_thuctap.R;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
+import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.model.User;
 
 import java.util.List;
@@ -21,19 +25,21 @@ import java.util.List;
 public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private final List<User> data;
+    private Fragment_Home fragment_Home ;
 
-    public UserAdapter(List<User> data) {
+    public UserAdapter(List<User> data , Fragment_Home fragmentHome) {
         this.data = data;
+        fragment_Home = fragmentHome;
         Log.e("TAG", "UserAdapter: ");
     }
 
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        UserContainerBinding biding = UserContainerBinding.inflate(LayoutInflater.from(parent.getContext()),
+        UserContainerBinding binding = UserContainerBinding.inflate(LayoutInflater.from(parent.getContext()),
                 parent,false);
         Log.e("haha", "onCreateViewHolder: kakakak" );
-        return new UserViewHolder(biding);
+        return new UserViewHolder(binding);
     }
 
     @Override
@@ -55,7 +61,7 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
 
 //        private TextView txtName,txtChat;
 //        private ImageView imgUser;
-        UserContainerBinding biding;
+        UserContainerBinding binding;
 
 //        public UserViewHolder(@NonNull View itemView) {
 //            super(itemView);
@@ -66,16 +72,22 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
 //            b
 //        }
 
-        public UserViewHolder(UserContainerBinding hbiding) {
-            super(hbiding.getRoot());
-            this.biding = hbiding;
+        public UserViewHolder(UserContainerBinding hbinding) {
+            super(hbinding.getRoot());
+            this.binding = hbinding;
         }
         public void setUserData(User user){
             Log.e("TAG", "setUserData: hahahah" );
-            biding.imgUsercontainer.setImageResource(R.drawable.ic_lock);
-            biding.txtNameUserContainer.setText(user.getName());
-            biding.txtChatUserContainer.setText("hohoh");
+            binding.imgUsercontainer.setImageResource(R.drawable.ic_lock);
+            binding.txtNameUserContainer.setText(user.getName());
+            binding.txtChatUserContainer.setText("hohoh");
+            binding.ctFriendUserContainer.setOnClickListener(v -> ClickChatFriend() );
             Log.e("TAG", "setUserData: hahahah" );
+        }
+
+        private void ClickChatFriend() {
+            fragment_Home.LoadingFriend();
+
         }
     }
 }
