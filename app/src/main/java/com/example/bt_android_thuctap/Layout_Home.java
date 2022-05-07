@@ -92,7 +92,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
          }
          else
          {
-             //Đăng Xuất
+             SignOut();
          }
          drawerLayout.closeDrawer(GravityCompat.START);
          return true;
