@@ -20,6 +20,7 @@ import android.widget.ImageView;
 //import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
+import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -88,7 +89,12 @@ public class SignInFragment extends Fragment {
                         /*   validate.set("Dang nhap thanh cong");*/
                         Log.d("String",""+doc.getData());
                         if(Objects.equals(loginViewModel.getPassword(),doc.get("password").toString())){
+                            User user = new User(doc.get("phone").toString(),
+                                    doc.get("password").toString(),doc.get("name").toString());
                             Intent intent = new Intent(getActivity(),Layout_Home.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("dataUser",user);
+                            intent.putExtras(bundle);
                             startActivity(intent);
 
                         }

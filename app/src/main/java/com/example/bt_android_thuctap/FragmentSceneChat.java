@@ -1,17 +1,29 @@
 package com.example.bt_android_thuctap;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.TextView;
 
+import com.example.bt_android_thuctap.adpter.ChatSenseAdapter;
 import com.example.bt_android_thuctap.databinding.FragmentSceneChatBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
+import com.example.bt_android_thuctap.model.ChatMessage;
+import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.viewmodel.FriendViewModel;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,15 +31,17 @@ import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
  * create an instance of this fragment.
  */
 public class FragmentSceneChat extends Fragment {
-    FragmentSceneChatBinding fragmentSceneChatBinding;
-    FriendViewModel friendViewModel;
+    public  FragmentSceneChatBinding fragmentSceneChatBinding;
+    public TextView txt;
+    public List<ChatMessage> data;
+    ChatSenseAdapter adpater;
+
+
 
 
     public FragmentSceneChat() {
-        // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static FragmentSceneChat newInstance() {
         FragmentSceneChat fragment = new FragmentSceneChat();
 
@@ -35,22 +49,28 @@ public class FragmentSceneChat extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentSceneChatBinding= FragmentSceneChatBinding.inflate(inflater, container, false);
         View mview=fragmentSceneChatBinding.getRoot();
+        User user = (User) getArguments().getSerializable("haha");
+        fragmentSceneChatBinding.txtNameFriendChatSense.setText(user.getName());
+        data = new ArrayList<>();
 
-        friendViewModel = new FriendViewModel();
-        fragmentSceneChatBinding.setFriendViewModel(friendViewModel);
-        fragmentSceneChatBinding.txtNameFriendChatSense.setText(friendViewModel.getName());
+
+        data.add(new ChatMessage("0912730927",setDataSender().getPhoneNumber(),"hi","1201"));
+        data.add(new ChatMessage(setDataSender().getPhoneNumber(),"0912730927","hello","1201"));
+        adpater = new ChatSenseAdapter(data,this);
+        fragmentSceneChatBinding.rcvChatSense.setAdapter(adpater);
+
+
+
+
+
         return mview;
+    }
+    public User setDataSender(){
+        Layout_Home layout_home = (Layout_Home) getActivity();
+        return layout_home.SetDataUser();
     }
 }

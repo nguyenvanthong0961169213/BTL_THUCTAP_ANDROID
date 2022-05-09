@@ -24,8 +24,8 @@ import java.util.List;
 
 public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
-    private final List<User> data;
-    private Fragment_Home fragment_Home ;
+    public final List<User> data;
+    public Fragment_Home fragment_Home ;
 
     public UserAdapter(List<User> data , Fragment_Home fragmentHome) {
         this.data = data;
@@ -44,7 +44,8 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        holder.setUserData(data.get(position));
+        User user = data.get(position);
+        holder.setUserData(user);
         Log.e("ad", "onBindViewHolder: "+position );
 
     }
@@ -58,36 +59,28 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
-
-//        private TextView txtName,txtChat;
-//        private ImageView imgUser;
         UserContainerBinding binding;
-
-//        public UserViewHolder(@NonNull View itemView) {
-//            super(itemView);
-
-//            txtName =  itemView.findViewById(R.id.txtNameUserContainer);
-//            txtChat = itemView.findViewById(R.id.txtChatUserContainer);
-//            imgUser = itemView.findViewById(id.img_usercontainer);
-//            b
-//        }
 
         public UserViewHolder(UserContainerBinding hbinding) {
             super(hbinding.getRoot());
             this.binding = hbinding;
         }
         public void setUserData(User user){
-            Log.e("TAG", "setUserData: hahahah" );
             binding.imgUsercontainer.setImageResource(R.drawable.ic_lock);
             binding.txtNameUserContainer.setText(user.getName());
             binding.txtChatUserContainer.setText("hohoh");
-            binding.ctFriendUserContainer.setOnClickListener(v -> ClickChatFriend() );
-            Log.e("TAG", "setUserData: hahahah" );
+
+//            Log.e("TAG", "setUserData: hahahah" );
+            binding.ctFriendUserContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    fragment_Home.LoadingFriend(user);
+
+
+                }
+            });
         }
 
-        private void ClickChatFriend() {
-            fragment_Home.LoadingFriend();
 
-        }
     }
 }

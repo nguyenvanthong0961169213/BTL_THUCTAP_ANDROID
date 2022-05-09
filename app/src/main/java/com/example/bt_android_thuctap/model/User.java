@@ -3,10 +3,11 @@ package com.example.bt_android_thuctap.model;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class User {
+public class User implements Serializable {
     //Attributes
     private String Name;
     private String PhoneNumber;

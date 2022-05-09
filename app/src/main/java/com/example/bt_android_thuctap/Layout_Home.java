@@ -9,21 +9,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.icu.lang.UScript;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+
 
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Changer_Password;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
+import com.example.bt_android_thuctap.fragmenthomeapp.HomeAppFragment;
+import com.example.bt_android_thuctap.model.User;
 import com.google.android.material.navigation.NavigationView;
 
-public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+       {
 
     private DrawerLayout drawerLayout;
     private static final int FRAGMENT_HOME=0;
     private static final int FRAGMENT_UPDATE_PROFILE=1;
     private static final int FRAGMENT_CHANGE_PASSWORD=2;
+//    private static final int FRAGMENT_CHAT_SENSE=3;
 
     private int currentFragment=FRAGMENT_HOME;
 
@@ -40,11 +48,13 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
                 R.string.Navigation_drawer_open,R.string.Navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView=findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        replaceFragment(new Fragment_Home());
+        replaceFragment(new HomeAppFragment());
+        SetDataUser();
+
+
     }
 
     @Override
@@ -98,4 +108,13 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         transaction.replace(R.id.content_frame,fragment);
         transaction.commit();
     }
+    public User SetDataUser(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        User user = (User) bundle.getSerializable("dataUser");
+        Log.e("Du lieu nguoi dung ",user.getName());
+        return user;
+    }
+
+
 }
