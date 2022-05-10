@@ -62,10 +62,9 @@ public class Fragment_Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         fragmentHomeBinding= FragmentHomeBinding.inflate(inflater, container, false);
+
         navigation = NavHostFragment.findNavController(this);
 //        fragmentHomeBinding = DataBindingUtil.setContentView(getActivity(),R.layout.fragment_home);
-        View mview=fragmentHomeBinding.getRoot();
-        data = new ArrayList<>();
 
         LoadingData();
         userAdapter = new UserAdapter(data,this);
@@ -91,7 +90,7 @@ public class Fragment_Home extends Fragment {
 
                 }
                 if(data.size()>0){
-                    UserAdapter userAdapter = new UserAdapter(data);
+                    UserAdapter userAdapter = new UserAdapter(data,this);
                     fragmentHomeBinding.rectanglesUser.setAdapter(userAdapter);
                     fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
                 }else{

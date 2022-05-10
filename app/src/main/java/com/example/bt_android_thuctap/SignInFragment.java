@@ -100,7 +100,9 @@ public class SignInFragment extends Fragment {
                 preferenceManager.putBoolean(Constants.key_Is_Sign_In,true);
                 preferenceManager.putString(Constants.key_UserId,documentSnapshot.getId());
                 preferenceManager.putString(Constants.key_Name,documentSnapshot.getString(Constants.key_Name));
+
                 preferenceManager.putString(Constants.key_Phone,documentSnapshot.getString(Constants.key_Phone));
+
                 loginViewModel.validate.set("Dang nhap thanh cong");
                 Intent intent = new Intent(getActivity(),Layout_Home.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
