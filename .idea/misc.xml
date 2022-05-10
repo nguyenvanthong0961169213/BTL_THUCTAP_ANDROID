@@ -40,6 +40,25 @@
         <entry key="..\:/Android/BTL_THUCTAP_ANDROID/app/src/main/res/layout/user_container.xml" value="0.1796875" />
         <entry key="..\:/Android_Tutorial_TinCoder/BTL_THUCTAP_ANDROID/app/src/main/res/layout/user_container.xml" value="0.1" />
 
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/drawable/background_received_message.xml" value="0.1085" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/drawable/background_sent_message.xml" value="0.1085" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/activity_layout_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/activity_main.xml" value="0.11096014492753623" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_change_password.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_home_app.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_scene_chat.xml" value="0.17" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_in.xml" value="0.11096014492753623" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_up.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_update_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/item_container_received_message.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/item_container_sent_message.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/layout_header_navigation.xml" value="0.11096014492753623" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/sendmessageuser.xml" value="0.20416666666666666" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/layout/user_container.xml" value="0.17" />
+        <entry key="..\:/BTL/BTL_THUCTAP_ANDROID/app/src/main/res/menu/menu_navigation.xml" value="0.20416666666666666" />
+
+
         <entry key="..\:/BTL_TT/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_in.xml" value="0.20416666666666666" />
         <entry key="..\:/BTL_TT/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_up.xml" value="0.20416666666666666" />
         <entry key="..\:/Code_Android/BT_Android_ThucTap/app/src/main/res/drawable/btn_nocolor.xml" value="0.18703703703703703" />

@@ -10,32 +10,51 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+
+import android.icu.lang.UScript;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+
+import android.os.Bundle;
+
 import android.view.MenuItem;
 import android.widget.Toast;
+
+
+import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Changer_Password;
+import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
+import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
+import com.example.bt_android_thuctap.fragmenthomeapp.HomeAppFragment;
+import com.example.bt_android_thuctap.model.User;
 
 import com.example.bt_android_thuctap.databinding.ActivityLayoutHomeBinding;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Changer_Password;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
+
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.google.firebase.messaging.FirebaseMessaging;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+
+public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    PreferenceManager preferenceManager ;
     private ActivityLayoutHomeBinding binding;
     private DrawerLayout drawerLayout;
     private static final int FRAGMENT_HOME=0;
     private static final int FRAGMENT_UPDATE_PROFILE=1;
     private static final int FRAGMENT_CHANGE_PASSWORD=2;
-    PreferenceManager preferenceManager;
+//    private static final int FRAGMENT_CHAT_SENSE=3;
     private int currentFragment=FRAGMENT_HOME;
 
     @Override
@@ -46,12 +65,14 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        preferenceManager = new PreferenceManager(this.getApplicationContext());
+        Log.e("sdasadsdasd", "onCreate: "+preferenceManager.getString(Constants.key_Phone) );
+
         drawerLayout=findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,
                 R.string.Navigation_drawer_open,R.string.Navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView=findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
         loadUser();
@@ -61,6 +82,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
     }
 
     private void loadUser() {
+
 
     }
 
@@ -95,6 +117,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
              SignOut();
          }
          drawerLayout.closeDrawer(GravityCompat.START);
+
          return true;
     }
 
@@ -120,6 +143,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         transaction.replace(R.id.content_frame,fragment);
         transaction.commit();
     }
+
     private void updateToken(String token){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference = database.collection("User").document(preferenceManager.getString(Constants.key_UserId));
@@ -138,4 +162,18 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
             finish();
         });
     }
+
+
+    public User SetDataUser(){
+        User user = new User(preferenceManager.getString(Constants.key_Name).toString(),
+                preferenceManager.getString(Constants.key_Phone).toString());
+//        Intent intent = getIntent();
+//        Bundle bundle = intent.getExtras();
+//        User user = (User) bundle.getSerializable("dataUser");
+        Log.e("Du lieu nguoi dung ",user.getName());
+        return user;
+    }
+
+
+
 }

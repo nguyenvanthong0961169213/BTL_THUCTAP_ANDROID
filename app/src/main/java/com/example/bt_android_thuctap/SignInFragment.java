@@ -20,6 +20,9 @@ import android.widget.ImageView;
 //import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
+
+import com.example.bt_android_thuctap.model.User;
+
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
@@ -36,7 +39,8 @@ import com.mahfa.dnswitch.DayNightSwitchListener;
 import java.util.Objects;
 
 public class SignInFragment extends Fragment {
-    private PreferenceManager preferenceManager;
+
+    PreferenceManager preferenceManager;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
     LoginViewModel loginViewModel;

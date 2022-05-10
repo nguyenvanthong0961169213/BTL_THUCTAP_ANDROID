@@ -16,8 +16,6 @@ import java.util.ArrayList;
 
 
 public class LoginViewModel extends BaseObservable {
-    FirebaseAuth firebaseAuth;
-    FirebaseFirestore firebaseFirestore;
     String userID,phone,password,name;
     private String PhoneNumber;
     private String Password;

@@ -1,12 +1,29 @@
 package com.example.bt_android_thuctap;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.TextView;
+
+import com.example.bt_android_thuctap.adpter.ChatSenseAdapter;
+import com.example.bt_android_thuctap.databinding.FragmentSceneChatBinding;
+import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
+import com.example.bt_android_thuctap.model.ChatMessage;
+import com.example.bt_android_thuctap.model.User;
+import com.example.bt_android_thuctap.viewmodel.FriendViewModel;
+import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,51 +31,45 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class FragmentSceneChat extends Fragment {
+    public  FragmentSceneChatBinding fragmentSceneChatBinding;
+    public TextView txt;
+    public List<ChatMessage> data;
+    ChatSenseAdapter adpater;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
 
     public FragmentSceneChat() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentSceneChat.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentSceneChat newInstance(String param1, String param2) {
+    public static FragmentSceneChat newInstance() {
         FragmentSceneChat fragment = new FragmentSceneChat();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scene_chat, container, false);
+        fragmentSceneChatBinding= FragmentSceneChatBinding.inflate(inflater, container, false);
+        View mview=fragmentSceneChatBinding.getRoot();
+        User user = (User) getArguments().getSerializable("haha");
+        fragmentSceneChatBinding.txtNameFriendChatSense.setText(user.getName());
+        data = new ArrayList<>();
+
+
+
+        adpater = new ChatSenseAdapter(data,this);
+        fragmentSceneChatBinding.rcvChatSense.setAdapter(adpater);
+
+
+
+
+
+        return mview;
+    }
+    public User setDataSender(){
+        Layout_Home layout_home = (Layout_Home) getActivity();
+        return layout_home.SetDataUser();
     }
 }

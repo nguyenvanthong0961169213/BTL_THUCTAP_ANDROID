@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_Home">
+
+    <fragment
+        android:id="@+id/fragment_Home"
+        android:name="com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home"
+        android:label="Fragment_Home" >
+        <action
+            android:id="@+id/action_fragment_Home_to_fragmentSceneChat"
+            app:destination="@id/fragmentSceneChat" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSceneChat"
+        android:name="com.example.bt_android_thuctap.FragmentSceneChat"
+        android:label="fragment_scene_chat"
+        tools:layout="@layout/fragment_scene_chat" />
+</navigation>

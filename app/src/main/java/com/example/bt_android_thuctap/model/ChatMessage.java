@@ -1,35 +1,47 @@
 package com.example.bt_android_thuctap.model;
 
 public class ChatMessage {
-    private String IdReciver,IdSend,Timestamp;
+    String idReceiver;
+    String idSend;
+    String message;
+    String Time;
 
-    public ChatMessage(String idReciver, String idSend, String timestamp) {
-        IdReciver = idReciver;
-        IdSend = idSend;
-        Timestamp = timestamp;
+    public ChatMessage(String idReceiver, String idSend, String message, String time) {
+        this.idReceiver = idReceiver;
+        this.idSend = idSend;
+        this.message = message;
+        Time = time;
     }
 
-    public String getIdReciver() {
-        return IdReciver;
+    public String getIdReceiver() {
+        return idReceiver;
     }
 
-    public void setIdReciver(String idReciver) {
-        IdReciver = idReciver;
+    public void setIdReceiver(String idReceiver) {
+        this.idReceiver = idReceiver;
     }
 
     public String getIdSend() {
-        return IdSend;
+        return idSend;
     }
 
     public void setIdSend(String idSend) {
-        IdSend = idSend;
+        this.idSend = idSend;
     }
 
-    public String getTimestamp() {
-        return Timestamp;
+    public String getMessage() {
+        return message;
     }
 
-    public void setTimestamp(String timestamp) {
-        Timestamp = timestamp;
+    public void setMessage(String message) {
+        this.message = message;
     }
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
+
 }
