@@ -22,11 +22,18 @@ import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
 import com.example.bt_android_thuctap.fragmenthomeapp.HomeAppFragment;
 import com.example.bt_android_thuctap.model.User;
+import com.example.bt_android_thuctap.util.Constants;
+import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
-       {
+import java.util.HashMap;
+import java.util.Map;
 
+public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    PreferenceManager preferenceManager ;
     private DrawerLayout drawerLayout;
     private static final int FRAGMENT_HOME=0;
     private static final int FRAGMENT_UPDATE_PROFILE=1;
@@ -43,6 +50,9 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        preferenceManager = new PreferenceManager(this.getApplicationContext());
+        Log.e("sdasadsdasd", "onCreate: "+preferenceManager.getString(Constants.key_Phone) );
+
         drawerLayout=findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,
                 R.string.Navigation_drawer_open,R.string.Navigation_drawer_close);
@@ -52,7 +62,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         navigationView.setNavigationItemSelectedListener(this);
 
         replaceFragment(new HomeAppFragment());
-        SetDataUser();
+//        SetDataUser();
 
 
     }
@@ -85,9 +95,10 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
          }
          else
          {
-             //Đăng Xuất
+             SignOut();
          }
          drawerLayout.closeDrawer(GravityCompat.START);
+
          return true;
     }
 
@@ -108,10 +119,24 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         transaction.replace(R.id.content_frame,fragment);
         transaction.commit();
     }
+    private void SignOut(){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = database.collection("User").document(preferenceManager.getString(Constants.key_UserId));
+        Map<String, Object> updates = new HashMap<>();
+        updates.put(Constants.key_FCM_Token, FieldValue.delete());
+        documentReference.update(updates).addOnSuccessListener(unused -> {
+            preferenceManager.clear();
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
+        });
+    }
+
     public User SetDataUser(){
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        User user = (User) bundle.getSerializable("dataUser");
+        User user = new User(preferenceManager.getString(Constants.key_Name).toString(),
+                preferenceManager.getString(Constants.key_Phone).toString());
+//        Intent intent = getIntent();
+//        Bundle bundle = intent.getExtras();
+//        User user = (User) bundle.getSerializable("dataUser");
         Log.e("Du lieu nguoi dung ",user.getName());
         return user;
     }

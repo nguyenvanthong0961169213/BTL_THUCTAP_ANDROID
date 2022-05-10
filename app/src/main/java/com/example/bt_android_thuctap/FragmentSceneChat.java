@@ -58,8 +58,7 @@ public class FragmentSceneChat extends Fragment {
         data = new ArrayList<>();
 
 
-        data.add(new ChatMessage("0912730927",setDataSender().getPhoneNumber(),"hi","1201"));
-        data.add(new ChatMessage(setDataSender().getPhoneNumber(),"0912730927","hello","1201"));
+
         adpater = new ChatSenseAdapter(data,this);
         fragmentSceneChatBinding.rcvChatSense.setAdapter(adpater);
 

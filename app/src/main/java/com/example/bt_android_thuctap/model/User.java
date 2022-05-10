@@ -22,6 +22,11 @@ public class User implements Serializable {
         Name = name;
     }
 
+    public User(String name, String phoneNumber) {
+        Name = name;
+        PhoneNumber = phoneNumber;
+    }
+
     //Contructer
     public User(String phoneNumber, String password, String name) {
         PhoneNumber = phoneNumber;
