@@ -10,11 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+
 import android.icu.lang.UScript;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+
+import android.os.Bundle;
+
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Changer_Password;
@@ -22,6 +27,12 @@ import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
 import com.example.bt_android_thuctap.fragmenthomeapp.HomeAppFragment;
 import com.example.bt_android_thuctap.model.User;
+
+import com.example.bt_android_thuctap.databinding.ActivityLayoutHomeBinding;
+import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Changer_Password;
+import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
+import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
+
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.material.navigation.NavigationView;
@@ -29,24 +40,28 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
+
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     PreferenceManager preferenceManager ;
+    private ActivityLayoutHomeBinding binding;
     private DrawerLayout drawerLayout;
     private static final int FRAGMENT_HOME=0;
     private static final int FRAGMENT_UPDATE_PROFILE=1;
     private static final int FRAGMENT_CHANGE_PASSWORD=2;
 //    private static final int FRAGMENT_CHAT_SENSE=3;
-
     private int currentFragment=FRAGMENT_HOME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_home);
-
+        preferenceManager = new PreferenceManager(getApplicationContext());
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,9 +75,13 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
         NavigationView navigationView=findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
+        loadUser();
+        getToken();
+        replaceFragment(new Fragment_Home());
 
-        replaceFragment(new HomeAppFragment());
-//        SetDataUser();
+    }
+
+    private void loadUser() {
 
 
     }
@@ -112,13 +131,26 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
             super.onBackPressed();
         }
     }
-
+    private void getToken(){
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+    private void showToast(String message){
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+    }
     private void replaceFragment(Fragment fragment)
     {
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame,fragment);
         transaction.commit();
     }
+
+    private void updateToken(String token){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = database.collection("User").document(preferenceManager.getString(Constants.key_UserId));
+        documentReference.update(Constants.key_FCM_Token,token).addOnSuccessListener(unused -> showToast("Update")).addOnFailureListener(e -> showToast("Error"));
+
+    }
+
     private void SignOut(){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference = database.collection("User").document(preferenceManager.getString(Constants.key_UserId));
@@ -131,6 +163,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         });
     }
 
+
     public User SetDataUser(){
         User user = new User(preferenceManager.getString(Constants.key_Name).toString(),
                 preferenceManager.getString(Constants.key_Phone).toString());
@@ -140,6 +173,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         Log.e("Du lieu nguoi dung ",user.getName());
         return user;
     }
+
 
 
 }

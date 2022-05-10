@@ -77,10 +77,9 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
                     fragment_Home.LoadingFriend(user);
 
 
+
                 }
             });
         }
-
-
-    }
+        
 }
