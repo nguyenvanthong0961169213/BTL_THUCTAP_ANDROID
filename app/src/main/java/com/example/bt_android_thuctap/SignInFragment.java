@@ -20,7 +20,9 @@ import android.widget.ImageView;
 //import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
+
 import com.example.bt_android_thuctap.model.User;
+
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
@@ -37,6 +39,7 @@ import com.mahfa.dnswitch.DayNightSwitchListener;
 import java.util.Objects;
 
 public class SignInFragment extends Fragment {
+
     PreferenceManager preferenceManager;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -53,10 +56,12 @@ public class SignInFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
-        if(preferenceManager.getBoolean(Constants.key_Is_Sign_In)) {
-            Intent intent = new Intent(getActivity(), Layout_Home.class);
+        if(preferenceManager.getBoolean(Constants.key_Is_Sign_In)){
+            Intent intent = new Intent(getActivity(),Layout_Home.class);
             startActivity(intent);
+
         }
+
     }
 
     @Override
@@ -95,10 +100,10 @@ public class SignInFragment extends Fragment {
                 preferenceManager.putBoolean(Constants.key_Is_Sign_In,true);
                 preferenceManager.putString(Constants.key_UserId,documentSnapshot.getId());
                 preferenceManager.putString(Constants.key_Name,documentSnapshot.getString(Constants.key_Name));
+
                 preferenceManager.putString(Constants.key_Phone,documentSnapshot.getString(Constants.key_Phone));
+
                 loginViewModel.validate.set("Dang nhap thanh cong");
-                Log.e("TAG", "SignInClick: "+ preferenceManager.getString(Constants.key_Name)+ " " +
-                        preferenceManager.getString(Constants.key_Phone));
                 Intent intent = new Intent(getActivity(),Layout_Home.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -107,6 +112,7 @@ public class SignInFragment extends Fragment {
                 loginViewModel.validate.set("Dang nhap that bai");
             }
         });
+
     }
 
     public void  CreateAccountClick(){

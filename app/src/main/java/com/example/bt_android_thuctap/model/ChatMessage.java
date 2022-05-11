@@ -55,6 +55,7 @@ public class ChatMessage {
 
     public void setTime(String time) {
         Time = time;
+
     }
 
     public Date getDateObject() {

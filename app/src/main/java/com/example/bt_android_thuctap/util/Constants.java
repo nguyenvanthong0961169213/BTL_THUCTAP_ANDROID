@@ -3,6 +3,7 @@ package com.example.bt_android_thuctap.util;
 public class Constants {
 /*    public static final String key_User = "User";*/
     public static final String key_Name = "name";
+
     public static final String key_Password = "password";
     public static final String key_Phone = "phone";
     public static final String key_UserId = "UserId";

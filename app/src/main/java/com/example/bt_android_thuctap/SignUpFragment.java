@@ -2,6 +2,7 @@ package com.example.bt_android_thuctap;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -11,8 +12,14 @@ import android.view.ViewGroup;
 
 import com.example.bt_android_thuctap.databinding.FragmentSignUpBinding;
 import com.example.bt_android_thuctap.model.User;
+import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +30,7 @@ public class SignUpFragment extends Fragment {
     FragmentSignUpBinding fragmentSignUpBinding;
     LoginViewModel loginViewModel;
     ViewPagerLoginAdaper viewPagerLoginAdaper;
+    FirebaseFirestore firebaseFirestore;
 
 
     public SignUpFragment() {
@@ -56,10 +64,27 @@ public class SignUpFragment extends Fragment {
         User user = new User(loginViewModel.getPhoneNumber(),loginViewModel.getPassword(),"user");
         if(isValidPassWord(user.getPassword())  == true && isValidPhone(user.getPhoneNumber()) == true)
         {
+            firebaseFirestore = FirebaseFirestore.getInstance();
+            HashMap<String, String> data = new HashMap<>();
+            data.put("name","");
+            data.put("password",loginViewModel.getPassword().toString());
+            data.put("phone",loginViewModel.getPhoneNumber().toString());
+            firebaseFirestore.collection("User").add(data).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    loginViewModel.validate.set("Add thanh cong");
+                    FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.view_pager_login,SignInFragment.newInstance());
+                    transaction.commit();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
 //           loginViewModel.validate.set("Đăng kí thành công");
-            FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.view_pager_login,SignInFragment.newInstance());
-            transaction.commit();
+
 
 
         }
