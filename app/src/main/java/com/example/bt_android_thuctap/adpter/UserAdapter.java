@@ -69,8 +69,7 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
             binding.imgUsercontainer.setImageResource(R.drawable.ic_lock);
             binding.txtNameUserContainer.setText(user.getName());
             binding.txtChatUserContainer.setText("hohoh");
-
-//            Log.e("TAG", "setUserData: hahahah" );
+            Log.e("TAG", "onCreateView: "+user.getId());
             binding.ctFriendUserContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

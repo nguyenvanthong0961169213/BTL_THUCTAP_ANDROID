@@ -26,6 +26,7 @@ import com.example.bt_android_thuctap.adpter.UserAdapter;
 import com.example.bt_android_thuctap.databinding.FragmentHomeBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignUpBinding;
 import com.example.bt_android_thuctap.model.User;
+import com.example.bt_android_thuctap.util.Constants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +62,11 @@ public class Fragment_Home extends Fragment {
         LoadingData();
         userAdapter = new UserAdapter(data,this);
         fragmentHomeBinding.rectanglesUser.setAdapter(userAdapter);
-        fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
+//        fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
+//        for (User user:data
+//             ) {
+//            Log.e("TAG", "onCreateView: "+user.getName());
+//        }
 
 
 
@@ -84,8 +89,17 @@ public class Fragment_Home extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot doc : task.getResult()){
-                        data.add(new User(doc.get("name").toString(),doc.get("password").toString()
-                                ,doc.get("name").toString()));
+//                        data.add(new User(doc.get("phone").toString(),doc.get("password").toString()
+//                                ,doc.get("name").toString()));
+                        User user = new User();
+                        user.setName(doc.getString(Constants.key_Name));
+                        user.setPhoneNumber(doc.getString(Constants.key_Phone));
+                        user.setPassword(doc.getString(Constants.key_Password));
+                        user.setToken(doc.getString(Constants.key_FCM_Token));
+                        Log.e("TAG", "onComplete: "+doc.getId() );
+                        user.setId(doc.getId());
+                        data.add(user);
+
 
                     }
 

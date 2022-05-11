@@ -132,8 +132,11 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
     }
 
     public User SetDataUser(){
-        User user = new User(preferenceManager.getString(Constants.key_Name).toString(),
-                preferenceManager.getString(Constants.key_Phone).toString());
+        User user = new User(preferenceManager.getString(Constants.key_Name),
+                preferenceManager.getString(Constants.key_Phone),
+                preferenceManager.getString(Constants.key_Password),
+                preferenceManager.getString(Constants.key_UserId),
+                preferenceManager.getString(Constants.key_FCM_Token));
 //        Intent intent = getIntent();
 //        Bundle bundle = intent.getExtras();
 //        User user = (User) bundle.getSerializable("dataUser");

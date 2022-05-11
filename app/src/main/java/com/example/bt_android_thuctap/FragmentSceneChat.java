@@ -1,29 +1,32 @@
 package com.example.bt_android_thuctap;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.TextView;
 
 import com.example.bt_android_thuctap.adpter.ChatSenseAdapter;
 import com.example.bt_android_thuctap.databinding.FragmentSceneChatBinding;
-import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.model.ChatMessage;
 import com.example.bt_android_thuctap.model.User;
-import com.example.bt_android_thuctap.viewmodel.FriendViewModel;
-import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
+import com.example.bt_android_thuctap.util.Constants;
+import com.example.bt_android_thuctap.util.PreferenceManager;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,9 +35,11 @@ import java.util.List;
  */
 public class FragmentSceneChat extends Fragment {
     public  FragmentSceneChatBinding fragmentSceneChatBinding;
-    public TextView txt;
     public List<ChatMessage> data;
     ChatSenseAdapter adpater;
+    PreferenceManager preferenceManager;
+    User receiverUser;
+    FirebaseFirestore firebaseFirestore;
 
 
 
@@ -53,14 +58,15 @@ public class FragmentSceneChat extends Fragment {
                              Bundle savedInstanceState) {
         fragmentSceneChatBinding= FragmentSceneChatBinding.inflate(inflater, container, false);
         View mview=fragmentSceneChatBinding.getRoot();
-        User user = (User) getArguments().getSerializable("haha");
-        fragmentSceneChatBinding.txtNameFriendChatSense.setText(user.getName());
-        data = new ArrayList<>();
+        receiverUser = (User) getArguments().getSerializable("haha");
+        fragmentSceneChatBinding.txtNameFriendChatSense.setText(receiverUser.getName());
+        init();
+        updateMessage();
 
 
 
-        adpater = new ChatSenseAdapter(data,this);
-        fragmentSceneChatBinding.rcvChatSense.setAdapter(adpater);
+
+        fragmentSceneChatBinding.layoutsend.setOnClickListener(v-> SendMessage());
 
 
 
@@ -68,8 +74,75 @@ public class FragmentSceneChat extends Fragment {
 
         return mview;
     }
+
+    public void SendMessage(){
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        HashMap<String, Object> message = new HashMap<>();
+        message.put(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId));
+        message.put(Constants.key_Receiver_Id,receiverUser.getId());
+        message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
+        message.put(Constants.key_Time,new Date());
+        firebaseFirestore.collection(Constants.key_Collection).add(message);
+        fragmentSceneChatBinding.txtinputMessage.setText(null);
+    }
+
     public User setDataSender(){
         Layout_Home layout_home = (Layout_Home) getActivity();
-        return layout_home.SetDataUser();
+        User user = layout_home.SetDataUser();
+        Log.e("TAG", "setDataSender: "+ user.getName() );
+        return user;
     }
+
+    public void updateMessage(){
+        firebaseFirestore.collection(Constants.key_Collection)
+                .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
+                .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
+                .addSnapshotListener(eventListener);
+        firebaseFirestore.collection(Constants.key_Collection)
+                .whereEqualTo(Constants.key_Sender_Id,receiverUser.getId())
+                .whereEqualTo(Constants.key_Receiver_Id,preferenceManager.getString(Constants.key_UserId))
+                .addSnapshotListener(eventListener);
+    }
+
+    public void  init(){
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
+        data = new ArrayList<>();
+        adpater = new ChatSenseAdapter(data,this);
+        fragmentSceneChatBinding.rcvChatSense.setAdapter(adpater);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    private String getReableDateTime(Date date){
+        return new SimpleDateFormat("MMMM dd, yyyy- hh:mm a" , Locale.getDefault()).format(date);
+    }
+
+    private final EventListener<QuerySnapshot> eventListener = (value, error) ->{
+        if(error != null){
+            return;
+        }
+        if(value!= null){
+            int count = data.size();
+            for(DocumentChange documentChange : value.getDocumentChanges()){
+                if(documentChange.getType() == DocumentChange.Type.ADDED){
+                    ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.setIdSend(documentChange.getDocument().getString(Constants.key_Sender_Id));
+                    chatMessage.setIdReceiver(documentChange.getDocument().getString(Constants.key_Receiver_Id));
+                    chatMessage.setMessage(documentChange.getDocument().getString(Constants.key_Message));
+                    chatMessage.setTime(getReableDateTime(documentChange.getDocument().getDate(Constants.key_Time)));
+                    chatMessage.setDateObject(documentChange.getDocument().getDate(Constants.key_Time));
+                    data.add(chatMessage);
+                }
+            }
+            Collections.sort(data, (obj1,obj2) -> obj1.getDateObject().compareTo(obj2.getDateObject()));
+            if(count == 0){
+                adpater.notifyDataSetChanged();
+            }
+            else{
+                adpater.notifyItemRangeInserted(data.size(),data.size());
+                fragmentSceneChatBinding.rcvChatSense.smoothScrollToPosition(data.size()-1);
+            }
+//            fragmentSceneChatBinding.rcvChatSense.setVisibility(View.VISIBLE);
+        }
+//        fragmentSceneChatBinding.rcvChatSense.setVisibility(View.GONE);
+    };
 }
