@@ -54,6 +54,7 @@ public class Fragment_Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         fragmentHomeBinding= FragmentHomeBinding.inflate(inflater, container, false);
+        fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
         navigation = NavHostFragment.findNavController(this);
 //        fragmentHomeBinding = DataBindingUtil.setContentView(getActivity(),R.layout.fragment_home);
         View mview=fragmentHomeBinding.getRoot();
@@ -62,11 +63,7 @@ public class Fragment_Home extends Fragment {
         LoadingData();
         userAdapter = new UserAdapter(data,this);
         fragmentHomeBinding.rectanglesUser.setAdapter(userAdapter);
-//        fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
-//        for (User user:data
-//             ) {
-//            Log.e("TAG", "onCreateView: "+user.getName());
-//        }
+        fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
 
 
 
