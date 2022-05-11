@@ -1,11 +1,23 @@
 package com.example.bt_android_thuctap.model;
 
+import java.util.Date;
+
 public class ChatMessage {
     String idReceiver;
     String idSend;
     String message;
     String Time;
+    Date dateObject;
 
+    public ChatMessage(){}
+
+    public ChatMessage(String idReceiver, String idSend, String message, String time, Date dateObject) {
+        this.idReceiver = idReceiver;
+        this.idSend = idSend;
+        this.message = message;
+        Time = time;
+        this.dateObject = dateObject;
+    }
     public ChatMessage(String idReceiver, String idSend, String message, String time) {
         this.idReceiver = idReceiver;
         this.idSend = idSend;
@@ -44,5 +56,13 @@ public class ChatMessage {
     public void setTime(String time) {
         Time = time;
 
+    }
+
+    public Date getDateObject() {
+        return dateObject;
+    }
+
+    public void setDateObject(Date dateObject) {
+        this.dateObject = dateObject;
     }
 }

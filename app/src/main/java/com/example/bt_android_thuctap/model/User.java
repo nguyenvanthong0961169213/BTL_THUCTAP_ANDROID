@@ -13,13 +13,36 @@ public class User implements Serializable{
     private String Name;
     private String PhoneNumber;
     private String Password;
+    private String Id;
     private String Token;
+    public User(){}
 
-    public User(String phoneNumber, String password, String name) {
+
+    public User(String name, String phoneNumber, String password, String id, String token) {
+        Name = name;
+        PhoneNumber = phoneNumber;
+        Password = password;
+        Id = id;
+        Token = token;
+    }
+
+    public User(String name, String phoneNumber) {
+        Name = name;
+        PhoneNumber = phoneNumber;
+    }
+
+    public User(String phoneNumber, String password, String name,String token) {
         PhoneNumber = phoneNumber;
         Password = password;
         Name = name;
+        Token = token;
+    }
+    public String getId() {
+        return Id;
+    }
 
+    public void setId(String id) {
+        Id = id;
     }
 
     public String getToken() {
@@ -38,18 +61,8 @@ public class User implements Serializable{
         Name = name;
     }
 
-    public User(String name, String phoneNumber) {
-        Name = name;
-        PhoneNumber = phoneNumber;
-    }
 
-    public User(String phoneNumber, String password, String name,String token) {
-        PhoneNumber = phoneNumber;
-        Password = password;
-        Name = name;
-        Token = token;
-    }
-
+    //Getters and Setters
 
     public String getPhoneNumber() {
         return PhoneNumber;
