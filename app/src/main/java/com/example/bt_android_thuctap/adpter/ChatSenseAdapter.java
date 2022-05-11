@@ -29,7 +29,7 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
     public ChatSenseAdapter(List<ChatMessage> data, FragmentSceneChat fragmentSceneChat) {
         this.data = data;
         this.fragmentSceneChat = fragmentSceneChat;
-        this.senderID = fragmentSceneChat.setDataSender().getPhoneNumber();
+        this.senderID = fragmentSceneChat.setDataSender().getId();
         Log.e("haha", "ChatSenseAdapter: Ok" );
 
     }
