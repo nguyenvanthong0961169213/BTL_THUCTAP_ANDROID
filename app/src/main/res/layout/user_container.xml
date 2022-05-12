@@ -16,6 +16,8 @@
         android:layout_height="wrap_content">
 
 
+
+
         <ImageView
             android:id="@+id/img_usercontainer"
             android:layout_width="60dp"
@@ -25,6 +27,7 @@
             app:srcCompat="@drawable/ic_user" />
 
         <LinearLayout
+            android:layout_marginLeft="20dp"
             android:layout_width="352dp"
             android:layout_height="50dp"
             android:layout_marginStart="1dp"

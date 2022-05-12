@@ -51,7 +51,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         setSupportActionBar(toolbar);
 
         preferenceManager = new PreferenceManager(this.getApplicationContext());
-        Log.e("sdasadsdasd", "onCreate: "+preferenceManager.getString(Constants.key_Phone) );
+
 
         drawerLayout=findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,
@@ -136,7 +136,8 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
                 preferenceManager.getString(Constants.key_Phone),
                 preferenceManager.getString(Constants.key_Password),
                 preferenceManager.getString(Constants.key_UserId),
-                preferenceManager.getString(Constants.key_FCM_Token));
+                preferenceManager.getString(Constants.key_FCM_Token),
+                preferenceManager.getString(Constants.key_Image));
 //        Intent intent = getIntent();
 //        Bundle bundle = intent.getExtras();
 //        User user = (User) bundle.getSerializable("dataUser");

@@ -60,6 +60,7 @@ public class FragmentSceneChat extends Fragment {
         View mview=fragmentSceneChatBinding.getRoot();
         receiverUser = (User) getArguments().getSerializable("haha");
         fragmentSceneChatBinding.txtNameFriendChatSense.setText(receiverUser.getName());
+        
         init();
         updateMessage();
 
@@ -82,7 +83,7 @@ public class FragmentSceneChat extends Fragment {
         message.put(Constants.key_Receiver_Id,receiverUser.getId());
         message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
         message.put(Constants.key_Time,new Date());
-        firebaseFirestore.collection(Constants.key_Collection).add(message);
+        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
         fragmentSceneChatBinding.txtinputMessage.setText(null);
     }
 
@@ -94,11 +95,11 @@ public class FragmentSceneChat extends Fragment {
     }
 
     public void updateMessage(){
-        firebaseFirestore.collection(Constants.key_Collection)
+        firebaseFirestore.collection(Constants.key_Message_Col)
                 .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
                 .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
                 .addSnapshotListener(eventListener);
-        firebaseFirestore.collection(Constants.key_Collection)
+        firebaseFirestore.collection(Constants.key_Message_Col)
                 .whereEqualTo(Constants.key_Sender_Id,receiverUser.getId())
                 .whereEqualTo(Constants.key_Receiver_Id,preferenceManager.getString(Constants.key_UserId))
                 .addSnapshotListener(eventListener);

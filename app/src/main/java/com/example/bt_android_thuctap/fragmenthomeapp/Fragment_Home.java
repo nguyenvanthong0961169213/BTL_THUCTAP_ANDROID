@@ -93,6 +93,8 @@ public class Fragment_Home extends Fragment {
                         user.setPhoneNumber(doc.getString(Constants.key_Phone));
                         user.setPassword(doc.getString(Constants.key_Password));
                         user.setToken(doc.getString(Constants.key_FCM_Token));
+                        user.setImage(doc.getString(Constants.key_Image));
+
                         Log.e("TAG", "onComplete: "+doc.getId() );
                         user.setId(doc.getId());
                         data.add(user);

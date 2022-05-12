@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bt_android_thuctap.FragmentSceneChat;
 import com.example.bt_android_thuctap.R;
+import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.model.User;
@@ -69,6 +70,10 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
             binding.imgUsercontainer.setImageResource(R.drawable.ic_lock);
             binding.txtNameUserContainer.setText(user.getName());
             binding.txtChatUserContainer.setText("hohoh");
+            if(user.getImage()!= null){
+                binding.imgUsercontainer.setImageBitmap(Convert.base64ToBitmap(user.getImage()));
+            }
+
             Log.e("TAG", "onCreateView: "+user.getId());
             binding.ctFriendUserContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
