@@ -58,18 +58,17 @@ public class Fragment_Home extends Fragment {
         navigation = NavHostFragment.findNavController(this);
 //        fragmentHomeBinding = DataBindingUtil.setContentView(getActivity(),R.layout.fragment_home);
         View mview=fragmentHomeBinding.getRoot();
-        data = new ArrayList<>();
-
         LoadingData();
         userAdapter = new UserAdapter(data,this);
-        fragmentHomeBinding.rectanglesUser.setAdapter(userAdapter);
-        fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
 
 
 
 
         return mview;
     }
+
+
+
 
     public void LoadingFriend(User Friend) {
         Bundle bundle = new Bundle();
@@ -80,6 +79,7 @@ public class Fragment_Home extends Fragment {
     }
 
     public void LoadingData() {
+        data = new ArrayList<>();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -99,6 +99,11 @@ public class Fragment_Home extends Fragment {
 
 
                     }
+//                    userAdapter = new UserAdapter(data,getContext());
+
+                    fragmentHomeBinding.rectanglesUser.setAdapter(userAdapter);
+                    fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
+
 
                 }
             }

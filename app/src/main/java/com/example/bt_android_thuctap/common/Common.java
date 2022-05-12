@@ -1,4 +1,4 @@
-package com.example.bt_android_thuctap.Common;
+package com.example.bt_android_thuctap.common;
 
 import com.example.bt_android_thuctap.model.User;
 
