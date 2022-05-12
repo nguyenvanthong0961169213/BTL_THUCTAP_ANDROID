@@ -4,7 +4,7 @@
     <item android:title="@string/String_navigation_fragment">
         <menu>
             <group android:checkableBehavior="single">
-                <item android:id="@+id/navigation_home"
+                <item android:id="@+id/navigation_home_app"
                     android:title="@string/String_navigation_home"
                     android:icon="@drawable/ic_home"/>
                 <item android:id="@+id/navigation_update_profile"

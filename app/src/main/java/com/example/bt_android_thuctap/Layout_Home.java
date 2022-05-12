@@ -70,11 +70,11 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
          int id=item.getItemId();
-         if(id==R.id.navigation_home)
+         if(id==R.id.navigation_home_app)
          {
              if(currentFragment!=FRAGMENT_HOME)
              {
-                 replaceFragment(new Fragment_Home());
+                 replaceFragment(new HomeAppFragment());
                  currentFragment=FRAGMENT_HOME;
              }
          }

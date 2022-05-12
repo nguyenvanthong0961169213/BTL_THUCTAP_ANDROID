@@ -14,15 +14,18 @@
 
         <TextView
             android:id="@+id/txtMessageSent"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="300dp"
             android:background="@drawable/background_sent_message"
-            android:padding="12dp"
             android:textColor="@color/white"
             android:textSize="20sp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.8"
             android:text="1234556778" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

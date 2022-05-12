@@ -2,53 +2,41 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
         <variable
             name="LoginViewModel"
             type="com.example.bt_android_thuctap.viewmodel.LoginViewModel" />
 
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:id="@+id/ctFriendUserContainer"
-        android:layout_height="wrap_content">
-
-
-        <ImageView
+        android:layout_height="70dp"
+        android:gravity="center_vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_usercontainer"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_user" />
-
+            android:src="@drawable/ic_add"/>
         <LinearLayout
-            android:layout_width="352dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-
-            app:layout_constraintStart_toEndOf="@+id/img_usercontainer"
-            app:layout_constraintTop_toTopOf="parent">
-
+            android:layout_marginTop="5dp">
             <TextView
                 android:id="@+id/txtNameUserContainer"
-
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Name" />
-
+                android:layout_height="30dp"
+                android:text="Name"
+                android:textSize="23dp"
+                android:textStyle="bold"/>
             <TextView
-
                 android:id="@+id/txtChatUserContainer"
-
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:text="Chat" />
+                android:text="Chat"
+                android:textSize="18dp"/>
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
