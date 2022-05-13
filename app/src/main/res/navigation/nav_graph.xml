@@ -12,10 +12,17 @@
         <action
             android:id="@+id/action_fragment_Home_to_fragmentSceneChat"
             app:destination="@id/fragmentSceneChat" />
+        <action
+            android:id="@+id/action_fragment_Home_to_conversionsFragment"
+            app:destination="@id/conversionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentSceneChat"
         android:name="com.example.bt_android_thuctap.FragmentSceneChat"
         android:label="fragment_scene_chat"
         tools:layout="@layout/fragment_scene_chat" />
+    <fragment
+        android:id="@+id/conversionsFragment"
+        android:name="com.example.bt_android_thuctap.fragmenthomeapp.ConversionsFragment"
+        android:label="ConversionsFragment" />
 </navigation>

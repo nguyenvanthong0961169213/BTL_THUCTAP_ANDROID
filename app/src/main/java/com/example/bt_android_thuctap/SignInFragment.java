@@ -94,6 +94,7 @@ public class SignInFragment extends Fragment {
                 DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                 preferenceManager.putBoolean(Constants.key_Is_Sign_In,true);
                 preferenceManager.putString(Constants.key_UserId,documentSnapshot.getId());
+                preferenceManager.putString(Constants.key_Image,documentSnapshot.getString(Constants.key_Image));
                 preferenceManager.putString(Constants.key_Name,documentSnapshot.getString(Constants.key_Name));
                 preferenceManager.putString(Constants.key_Phone,documentSnapshot.getString(Constants.key_Phone));
                 loginViewModel.validate.set("Dang nhap thanh cong");

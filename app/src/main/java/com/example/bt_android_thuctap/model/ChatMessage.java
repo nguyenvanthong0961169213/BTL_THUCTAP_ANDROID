@@ -8,8 +8,21 @@ public class ChatMessage {
     String message;
     String Time;
     Date dateObject;
+    public String conversionId , conversionName , conversionImage ;
 
     public ChatMessage(){}
+
+    public ChatMessage(String idReceiver, String idSend, String message, String time,
+                       Date dateObject, String conversionId, String conversionName, String conversionImage) {
+        this.idReceiver = idReceiver;
+        this.idSend = idSend;
+        this.message = message;
+        Time = time;
+        this.dateObject = dateObject;
+        this.conversionId = conversionId;
+        this.conversionName = conversionName;
+        this.conversionImage = conversionImage;
+    }
 
     public ChatMessage(String idReceiver, String idSend, String message, String time, Date dateObject) {
         this.idReceiver = idReceiver;
@@ -63,5 +76,29 @@ public class ChatMessage {
 
     public void setDateObject(Date dateObject) {
         this.dateObject = dateObject;
+    }
+
+    public String getConversionId() {
+        return conversionId;
+    }
+
+    public void setConversionId(String conversionId) {
+        this.conversionId = conversionId;
+    }
+
+    public String getConversionName() {
+        return conversionName;
+    }
+
+    public void setConversionName(String conversionName) {
+        this.conversionName = conversionName;
+    }
+
+    public String getConversionImage() {
+        return conversionImage;
+    }
+
+    public void setConversionImage(String conversionImage) {
+        this.conversionImage = conversionImage;
     }
 }

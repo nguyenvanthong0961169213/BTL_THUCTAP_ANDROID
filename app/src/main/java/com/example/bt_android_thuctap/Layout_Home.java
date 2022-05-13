@@ -136,10 +136,8 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
                 preferenceManager.getString(Constants.key_Phone),
                 preferenceManager.getString(Constants.key_Password),
                 preferenceManager.getString(Constants.key_UserId),
-                preferenceManager.getString(Constants.key_FCM_Token));
-//        Intent intent = getIntent();
-//        Bundle bundle = intent.getExtras();
-//        User user = (User) bundle.getSerializable("dataUser");
+                preferenceManager.getString(Constants.key_FCM_Token),
+                preferenceManager.getString(Constants.key_Image));
         Log.e("Du lieu nguoi dung ",user.getName());
         return user;
     }
