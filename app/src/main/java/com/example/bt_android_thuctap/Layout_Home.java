@@ -70,11 +70,11 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
          int id=item.getItemId();
-         if(id==R.id.navigation_home)
+         if(id==R.id.navigation_home_app)
          {
              if(currentFragment!=FRAGMENT_HOME)
              {
-                 replaceFragment(new Fragment_Home());
+                 replaceFragment(new HomeAppFragment());
                  currentFragment=FRAGMENT_HOME;
              }
          }
@@ -136,10 +136,8 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
                 preferenceManager.getString(Constants.key_Phone),
                 preferenceManager.getString(Constants.key_Password),
                 preferenceManager.getString(Constants.key_UserId),
-                preferenceManager.getString(Constants.key_FCM_Token));
-//        Intent intent = getIntent();
-//        Bundle bundle = intent.getExtras();
-//        User user = (User) bundle.getSerializable("dataUser");
+                preferenceManager.getString(Constants.key_FCM_Token),
+                preferenceManager.getString(Constants.key_Image));
         Log.e("Du lieu nguoi dung ",user.getName());
         return user;
     }

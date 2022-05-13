@@ -14,16 +14,24 @@ public class User implements Serializable {
     private String Password;
     private String Id;
     private String Token;
-
+    private String Image;
     public User(){}
 
+    public String getImage() {
+        return Image;
+    }
 
-    public User(String name, String phoneNumber, String password, String id, String token) {
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    public User(String name, String phoneNumber, String password, String id, String token,String image) {
         Name = name;
         PhoneNumber = phoneNumber;
         Password = password;
         Id = id;
         Token = token;
+        Image = image;
     }
 
     public User(String name, String phoneNumber) {

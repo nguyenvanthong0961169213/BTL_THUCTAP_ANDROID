@@ -32,7 +32,7 @@
                 android:textSize="23dp"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/txtChatUserContainer"
+                android:id="@+id/txtRecentConversionContainer"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 android:text="Chat"

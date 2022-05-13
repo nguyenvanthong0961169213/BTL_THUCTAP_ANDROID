@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bt_android_thuctap.FragmentSceneChat;
+import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.databinding.ItemContainerReceivedMessageBinding;
 import com.example.bt_android_thuctap.databinding.ItemContainerSentMessageBinding;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
@@ -100,6 +101,11 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public void SetMessageReceiverData(ChatMessage chatMessage){
             binding.textMessageReceiver.setText(chatMessage.getMessage());
+            if(fragmentSceneChat.receiverUser.getImage()!= null){
+                binding.imageProfile.setImageBitmap(Convert.base64ToBitmap
+                        (fragmentSceneChat.receiverUser.getImage()));
+            }
+
         }
     }
 

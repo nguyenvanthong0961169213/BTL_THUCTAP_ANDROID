@@ -22,11 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bt_android_thuctap.FragmentSceneChat;
 import com.example.bt_android_thuctap.Layout_Home;
 import com.example.bt_android_thuctap.R;
+import com.example.bt_android_thuctap.adpter.RecentConversationsAdapter;
 import com.example.bt_android_thuctap.adpter.UserAdapter;
 import com.example.bt_android_thuctap.databinding.FragmentHomeBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignUpBinding;
+import com.example.bt_android_thuctap.model.ChatMessage;
 import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.util.Constants;
+import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +49,9 @@ public class Fragment_Home extends Fragment {
     FirebaseFirestore firebaseFirestore;
     UserAdapter userAdapter;
     List<User> data;
+    PreferenceManager preferenceManager;
+//    List<ChatMessage> conversions;
+//    RecentConversationsAdapter recentConversationsAdapter;
     FragmentHomeBinding fragmentHomeBinding;
 
 
@@ -54,12 +60,14 @@ public class Fragment_Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         fragmentHomeBinding= FragmentHomeBinding.inflate(inflater, container, false);
+        View mview=fragmentHomeBinding.getRoot();
+
+        preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
         fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
         navigation = NavHostFragment.findNavController(this);
-//        fragmentHomeBinding = DataBindingUtil.setContentView(getActivity(),R.layout.fragment_home);
-        View mview=fragmentHomeBinding.getRoot();
         LoadingData();
         userAdapter = new UserAdapter(data,this);
+        fragmentHomeBinding.edtSearch.setOnClickListener(v -> goConversions());
 
 
 
@@ -67,6 +75,9 @@ public class Fragment_Home extends Fragment {
         return mview;
     }
 
+    private void goConversions() {
+        navigation.navigate(R.id.action_fragment_Home_to_conversionsFragment);
+    }
 
 
 
@@ -74,7 +85,6 @@ public class Fragment_Home extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("haha",Friend);
         navigation.navigate(R.id.action_fragment_Home_to_fragmentSceneChat,bundle);
-
 
     }
 
@@ -86,20 +96,21 @@ public class Fragment_Home extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot doc : task.getResult()){
-//                        data.add(new User(doc.get("phone").toString(),doc.get("password").toString()
-//                                ,doc.get("name").toString()));
-                        User user = new User();
-                        user.setName(doc.getString(Constants.key_Name));
-                        user.setPhoneNumber(doc.getString(Constants.key_Phone));
-                        user.setPassword(doc.getString(Constants.key_Password));
-                        user.setToken(doc.getString(Constants.key_FCM_Token));
-                        Log.e("TAG", "onComplete: "+doc.getId() );
-                        user.setId(doc.getId());
-                        data.add(user);
+                        if(doc.getId().equals(preferenceManager.getString
+                                (Constants.key_UserId)) == false) {
+                            User user = new User();
+                            user.setName(doc.getString(Constants.key_Name));
+                            user.setPhoneNumber(doc.getString(Constants.key_Phone));
+                            user.setPassword(doc.getString(Constants.key_Password));
+                            user.setToken(doc.getString(Constants.key_FCM_Token));
+                            user.setImage(doc.getString(Constants.key_Image));
+                            Log.e("TAG", "onComplete: " + doc.getId());
+                            user.setId(doc.getId());
+                            data.add(user);
+                        }
 
 
                     }
-//                    userAdapter = new UserAdapter(data,getContext());
 
                     fragmentHomeBinding.rectanglesUser.setAdapter(userAdapter);
                     fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);

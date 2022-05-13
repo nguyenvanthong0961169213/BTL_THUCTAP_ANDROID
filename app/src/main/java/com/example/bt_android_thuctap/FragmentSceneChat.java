@@ -15,7 +15,10 @@ import com.example.bt_android_thuctap.model.ChatMessage;
 import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,8 +41,9 @@ public class FragmentSceneChat extends Fragment {
     public List<ChatMessage> data;
     ChatSenseAdapter adpater;
     PreferenceManager preferenceManager;
-    User receiverUser;
+    public User receiverUser;
     FirebaseFirestore firebaseFirestore;
+    String conversionsId = null;
 
 
 
@@ -60,6 +64,7 @@ public class FragmentSceneChat extends Fragment {
         View mview=fragmentSceneChatBinding.getRoot();
         receiverUser = (User) getArguments().getSerializable("haha");
         fragmentSceneChatBinding.txtNameFriendChatSense.setText(receiverUser.getName());
+
         init();
         updateMessage();
 
@@ -82,7 +87,24 @@ public class FragmentSceneChat extends Fragment {
         message.put(Constants.key_Receiver_Id,receiverUser.getId());
         message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
         message.put(Constants.key_Time,new Date());
-        firebaseFirestore.collection(Constants.key_Collection).add(message);
+        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
+        if(conversionsId != null){
+            updateConversion(fragmentSceneChatBinding.txtinputMessage.getText().toString());
+        }
+        else{
+            HashMap<String , Object> conversion = new HashMap<>();
+            conversion.put(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId));
+            conversion.put(Constants.key_Sender_Name,preferenceManager.getString(Constants.key_Name));
+            conversion.put(Constants.key_Sender_Image,preferenceManager.getString(Constants.key_Image));
+            conversion.put(Constants.key_Receiver_Id,receiverUser.getId());
+            conversion.put(Constants.key_Receiver_Name,receiverUser.getName());
+//            Log.e("", "SendMessage: "+receiverUser.getImage() );
+            conversion.put(Constants.key_Receiver_Image,receiverUser.getImage());
+            conversion.put(Constants.key_Last_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
+            conversion.put(Constants.key_Time,new Date());
+            addConversion(conversion);
+
+        }
         fragmentSceneChatBinding.txtinputMessage.setText(null);
     }
 
@@ -94,11 +116,11 @@ public class FragmentSceneChat extends Fragment {
     }
 
     public void updateMessage(){
-        firebaseFirestore.collection(Constants.key_Collection)
+        firebaseFirestore.collection(Constants.key_Message_Col)
                 .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
                 .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
                 .addSnapshotListener(eventListener);
-        firebaseFirestore.collection(Constants.key_Collection)
+        firebaseFirestore.collection(Constants.key_Message_Col)
                 .whereEqualTo(Constants.key_Sender_Id,receiverUser.getId())
                 .whereEqualTo(Constants.key_Receiver_Id,preferenceManager.getString(Constants.key_UserId))
                 .addSnapshotListener(eventListener);
@@ -141,8 +163,47 @@ public class FragmentSceneChat extends Fragment {
                 adpater.notifyItemRangeInserted(data.size(),data.size());
                 fragmentSceneChatBinding.rcvChatSense.smoothScrollToPosition(data.size()-1);
             }
-//            fragmentSceneChatBinding.rcvChatSense.setVisibility(View.VISIBLE);
+            if (conversionsId == null){
+                checkForConversion();
+            }
         }
-//        fragmentSceneChatBinding.rcvChatSense.setVisibility(View.GONE);
+    };
+
+    private void addConversion(HashMap<String ,Object> conversion){
+        firebaseFirestore.collection(Constants.key_Conversion_Col)
+                .add(conversion)
+                .addOnSuccessListener(DocumentReference -> conversionsId = DocumentReference.getId());
+    }
+
+    private void updateConversion(String message){
+        DocumentReference documentReference = firebaseFirestore.collection(Constants.key_Conversion_Col)
+                .document(conversionsId);
+        documentReference.update(
+          Constants.key_Last_Message, message ,
+          Constants.key_Time , new Date()
+        );
+    }
+
+    private void checkForConversion(){
+        if(data.size() != 0){
+            checkConversionsRemotely(preferenceManager.getString(Constants.key_UserId),
+                    receiverUser.getId());
+            checkConversionsRemotely(receiverUser.getId(),
+                    preferenceManager.getString(Constants.key_UserId));
+        }
+    }
+
+    private void checkConversionsRemotely(String senderId , String receiverId){
+        firebaseFirestore.collection(Constants.key_Conversion_Col).
+                whereEqualTo(Constants.key_Sender_Id,senderId).
+                whereEqualTo(Constants.key_Receiver_Id,receiverId).get().
+                addOnCompleteListener(conversionOnCompleteListener);
+    }
+
+    private final OnCompleteListener<QuerySnapshot> conversionOnCompleteListener = task -> {
+        if(task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size()>0 ){
+            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+            conversionsId = documentSnapshot.getId();
+        }
     };
 }
