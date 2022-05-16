@@ -33,6 +33,7 @@ import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -47,6 +48,7 @@ public class Fragment_Home extends Fragment {
     NavController navigation;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+    DocumentReference documentReference;
     UserAdapter userAdapter;
     List<User> data;
     PreferenceManager preferenceManager;
@@ -54,24 +56,18 @@ public class Fragment_Home extends Fragment {
 //    RecentConversationsAdapter recentConversationsAdapter;
     FragmentHomeBinding fragmentHomeBinding;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         fragmentHomeBinding= FragmentHomeBinding.inflate(inflater, container, false);
-        View mview=fragmentHomeBinding.getRoot();
-
+        View mview = fragmentHomeBinding.getRoot();
         preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
         fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
         navigation = NavHostFragment.findNavController(this);
         LoadingData();
         userAdapter = new UserAdapter(data,this);
         fragmentHomeBinding.edtSearch.setOnClickListener(v -> goConversions());
-
-
-
-
         return mview;
     }
 
@@ -79,18 +75,17 @@ public class Fragment_Home extends Fragment {
         navigation.navigate(R.id.action_fragment_Home_to_conversionsFragment);
     }
 
-
-
     public void LoadingFriend(User Friend) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("haha",Friend);
         navigation.navigate(R.id.action_fragment_Home_to_fragmentSceneChat,bundle);
-
     }
 
     public void LoadingData() {
         data = new ArrayList<>();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        documentReference = firebaseFirestore.collection("User")
+                .document(preferenceManager.getString(Constants.key_UserId));
         firebaseFirestore.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -105,19 +100,27 @@ public class Fragment_Home extends Fragment {
                             user.setToken(doc.getString(Constants.key_FCM_Token));
                             user.setImage(doc.getString(Constants.key_Image));
                             Log.e("TAG", "onComplete: " + doc.getId());
+                            user.setStatus(doc.getString(Constants.key_Status));
                             user.setId(doc.getId());
                             data.add(user);
                         }
-
-
                     }
-
                     fragmentHomeBinding.rectanglesUser.setAdapter(userAdapter);
                     fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
-
-
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        documentReference.update(Constants.key_Status, "offline");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        documentReference.update(Constants.key_Status, "online");
     }
 }
