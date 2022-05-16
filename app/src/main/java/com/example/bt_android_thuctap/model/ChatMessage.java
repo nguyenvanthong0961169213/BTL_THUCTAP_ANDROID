@@ -1,5 +1,7 @@
 package com.example.bt_android_thuctap.model;
 
+import android.net.Uri;
+
 import java.util.Date;
 
 public class ChatMessage {
@@ -7,8 +9,17 @@ public class ChatMessage {
     String idSend;
     String message;
     String Time;
+    String uri;
     Date dateObject;
     public String conversionId , conversionName , conversionImage ;
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
     public ChatMessage(){}
 

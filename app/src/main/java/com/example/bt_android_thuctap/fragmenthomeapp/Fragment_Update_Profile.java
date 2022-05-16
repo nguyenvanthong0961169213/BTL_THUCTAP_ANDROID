@@ -172,7 +172,7 @@ public class Fragment_Update_Profile extends Fragment {
         database.collection(Constants.key_User_Col).document(preferenceManager.getString(Constants.key_UserId)).update(user).addOnSuccessListener(documentReference -> {
             preferenceManager.putString(Constants.key_Image, encodeImage);
             preferenceManager.putString(Constants.key_Name, name);
-            preferenceManager.putString(Constants.key_Image, phone);
+            preferenceManager.putString(Constants.key_Image, encodeImage);
         }).addOnFailureListener(e -> {
             showToast(e.getMessage());
         });

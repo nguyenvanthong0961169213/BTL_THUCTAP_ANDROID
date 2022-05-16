@@ -1,5 +1,7 @@
 package com.example.bt_android_thuctap.util;
 
+import android.net.Uri;
+
 public class Constants {
     /*    public static final String key_User = "User";*/
     public static final String key_User_Col = "User";
@@ -17,6 +19,7 @@ public class Constants {
     public static final String key_Message = "message";
     public static final String key_Time = "Time";
     public static final String key_Image = "image";
+    public static final String key_Image_Mess = "imageMess";
 
     public static final String key_Conversion_Col = "Conversation";
     public static final String key_Sender_Name = "nameSend";
