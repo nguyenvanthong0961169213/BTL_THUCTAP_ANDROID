@@ -23,6 +23,8 @@ import com.example.bt_android_thuctap.model.User;
 
 import java.util.List;
 
+import kotlin.reflect.KVisibility;
+
 public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     public final List<User> data;
@@ -48,7 +50,6 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
         User user = data.get(position);
         holder.setUserData(user);
         Log.e("ad", "onBindViewHolder: "+position );
-
     }
 
     @Override
@@ -61,7 +62,6 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
         UserContainerBinding binding;
-
         public UserViewHolder(UserContainerBinding hbinding) {
             super(hbinding.getRoot());
             this.binding = hbinding;
@@ -72,18 +72,24 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
             }
             binding.txtNameUserContainer.setText(user.getName());
             binding.txtChatUserContainer.setText("hohoh");
+            if(user.getStatus().equals("online")){
+                binding.imgStatusOn.setVisibility(View.VISIBLE);
+                binding.imgStatusOff.setVisibility(View.GONE);
+            }else if(user.getStatus().equals("offline")){
+                binding.imgStatusOn.setVisibility(View.GONE);
+                binding.imgStatusOff.setVisibility(View.VISIBLE);
+            }
+            else{
+                binding.imgStatusOn.setVisibility(View.GONE);
+                binding.imgStatusOff.setVisibility(View.GONE);
+            }
             Log.e("TAG", "onCreateView: "+user.getId());
             binding.ctFriendUserContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     fragment_Home.LoadingFriend(user);
-
-
                 }
             });
         }
-
-
-
     }
 }
