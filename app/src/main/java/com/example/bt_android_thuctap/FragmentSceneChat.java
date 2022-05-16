@@ -45,9 +45,6 @@ public class FragmentSceneChat extends Fragment {
     FirebaseFirestore firebaseFirestore;
     String conversionsId = null;
 
-
-
-
     public FragmentSceneChat() {
     }
 
@@ -64,19 +61,9 @@ public class FragmentSceneChat extends Fragment {
         View mview=fragmentSceneChatBinding.getRoot();
         receiverUser = (User) getArguments().getSerializable("haha");
         fragmentSceneChatBinding.txtNameFriendChatSense.setText(receiverUser.getName());
-
         init();
         updateMessage();
-
-
-
-
         fragmentSceneChatBinding.layoutsend.setOnClickListener(v-> SendMessage());
-
-
-
-
-
         return mview;
     }
 
