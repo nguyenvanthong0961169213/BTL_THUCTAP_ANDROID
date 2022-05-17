@@ -17,8 +17,10 @@ import com.example.bt_android_thuctap.model.ChatMessage;
 import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -43,7 +45,7 @@ import java.util.Locale;
 public class FragmentSceneChat extends Fragment {
     public  FragmentSceneChatBinding fragmentSceneChatBinding;
     public List<ChatMessage> data;
-    ChatSenseAdapter adpater;
+    public ChatSenseAdapter adpater;
     PreferenceManager preferenceManager;
     public User receiverUser;
     FirebaseFirestore firebaseFirestore;
@@ -75,17 +77,25 @@ public class FragmentSceneChat extends Fragment {
         message.put(Constants.key_Receiver_Id,receiverUser.getId());
         message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
         message.put(Constants.key_Time,new Date());
-        firebaseFirestore.collection(Constants.key_Message_Col).add(message).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                 adpater.binding.checkSend.setImageResource(R.drawable.ic_send_success);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+        firebaseFirestore.collection(Constants.key_Message_Col).add(message)
+//        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//             @Override
+//             public void onSuccess(DocumentReference documentReference) {
+//                 adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
+//             }
+//        })
+        .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
             }
         });
+//        .addOnFailureListener(new OnFailureListener() {
+//            @Override
+//             public void onFailure(@NonNull Exception e) {
+//             adpater.binding.checkSend.setImageResource(R.drawable.ic_send_success);
+//              }
+//        });
         if(conversionsId != null){
             updateConversion(fragmentSceneChatBinding.txtinputMessage.getText().toString());
         }
@@ -117,10 +127,6 @@ public class FragmentSceneChat extends Fragment {
                 .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
                 .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
                 .addSnapshotListener(eventListener);
-        firebaseFirestore.collection(Constants.key_Message_Col)
-                .whereEqualTo(Constants.key_Sender_Id,receiverUser.getId())
-                .whereEqualTo(Constants.key_Receiver_Id,preferenceManager.getString(Constants.key_UserId))
-                .addSnapshotListener(eventListener);
     }
 
     public void  init(){
@@ -150,6 +156,7 @@ public class FragmentSceneChat extends Fragment {
                     chatMessage.setTime(getReableDateTime(documentChange.getDocument().getDate(Constants.key_Time)));
                     chatMessage.setDateObject(documentChange.getDocument().getDate(Constants.key_Time));
                     data.add(chatMessage);
+
                 }
             }
             Collections.sort(data, (obj1,obj2) -> obj1.getDateObject().compareTo(obj2.getDateObject()));
