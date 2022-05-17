@@ -2,6 +2,7 @@ package com.example.bt_android_thuctap;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,11 +12,14 @@ import android.view.ViewGroup;
 
 import com.example.bt_android_thuctap.adpter.ChatSenseAdapter;
 import com.example.bt_android_thuctap.databinding.FragmentSceneChatBinding;
+import com.example.bt_android_thuctap.databinding.ItemContainerSentMessageBinding;
 import com.example.bt_android_thuctap.model.ChatMessage;
 import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,19 +48,13 @@ public class FragmentSceneChat extends Fragment {
     public User receiverUser;
     FirebaseFirestore firebaseFirestore;
     String conversionsId = null;
-
-
-
-
     public FragmentSceneChat() {
     }
-
     public static FragmentSceneChat newInstance() {
         FragmentSceneChat fragment = new FragmentSceneChat();
 
         return fragment;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,19 +62,9 @@ public class FragmentSceneChat extends Fragment {
         View mview=fragmentSceneChatBinding.getRoot();
         receiverUser = (User) getArguments().getSerializable("haha");
         fragmentSceneChatBinding.txtNameFriendChatSense.setText(receiverUser.getName());
-
         init();
         updateMessage();
-
-
-
-
         fragmentSceneChatBinding.layoutsend.setOnClickListener(v-> SendMessage());
-
-
-
-
-
         return mview;
     }
 
@@ -87,7 +75,17 @@ public class FragmentSceneChat extends Fragment {
         message.put(Constants.key_Receiver_Id,receiverUser.getId());
         message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
         message.put(Constants.key_Time,new Date());
-        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
+        firebaseFirestore.collection(Constants.key_Message_Col).add(message).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                 adpater.binding.checkSend.setImageResource(R.drawable.ic_send_success);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
         if(conversionsId != null){
             updateConversion(fragmentSceneChatBinding.txtinputMessage.getText().toString());
         }
@@ -103,7 +101,6 @@ public class FragmentSceneChat extends Fragment {
             conversion.put(Constants.key_Last_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
             conversion.put(Constants.key_Time,new Date());
             addConversion(conversion);
-
         }
         fragmentSceneChatBinding.txtinputMessage.setText(null);
     }

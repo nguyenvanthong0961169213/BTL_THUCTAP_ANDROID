@@ -86,8 +86,12 @@
         <entry key="..\:/Users/babyr/Desktop/Android/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_update_profile.xml" value="0.21240942028985507" />
         <entry key="..\:/Users/babyr/Desktop/Android/BTL_THUCTAP_ANDROID/app/src/main/res/layout/user_container.xml" value="0.21240942028985507" />
         <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/drawable/background_received_message.xml" value="0.1065" />
+        <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/drawable/background_sent_message.xml" value="0.1065" />
         <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_home_app.xml" value="0.2" />
+        <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_scene_chat.xml" value="0.2" />
+        <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_in.xml" value="0.25" />
+        <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/fragment_sign_up.xml" value="0.2" />
         <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/item_container_received_message.xml" value="0.2" />
         <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/item_container_received_photo.xml" value="0.25" />
         <entry key="..\:/Users/thong/Desktop/test_ui/BTL_THUCTAP_ANDROID/app/src/main/res/layout/item_container_sent_message.xml" value="0.2" />

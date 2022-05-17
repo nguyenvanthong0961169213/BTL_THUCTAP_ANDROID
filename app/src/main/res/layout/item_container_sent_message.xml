@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp">
-
         <TextView
             android:id="@+id/txtMessageSent"
             android:layout_width="wrap_content"
@@ -24,9 +23,20 @@
             android:paddingRight="15dp"
             android:paddingTop="9dp"
             android:paddingBottom="9dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/check_send"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="1234556778" />
+            android:text="1234556778"
+            android:layout_marginRight="5dp"/>
+        //       app:layout_constraintEnd_toEndOf="parent"
+        <ImageView
+            android:id="@+id/check_send"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_send_unsuccess"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="20dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
