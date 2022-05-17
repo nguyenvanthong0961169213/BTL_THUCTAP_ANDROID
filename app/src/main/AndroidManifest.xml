@@ -14,13 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BT_Android_ThucTap">
         <service
-            android:name=".firebase.MessagerService"
+            android:name=".firebase.MessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".Layout_Home"
             android:exported="false" />
