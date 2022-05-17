@@ -88,12 +88,15 @@ public class SignInFragment extends Fragment {
 
     public void SignInClick() {
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("User").whereEqualTo("phone",loginViewModel.getPhoneNumber())
-                .whereEqualTo("password",loginViewModel.getPassword()).get().addOnCompleteListener(task -> {
+        firebaseFirestore.collection(Constants.key_User_Col)
+                .whereEqualTo(Constants.key_Phone,loginViewModel.getPhoneNumber())
+                .whereEqualTo(Constants.key_Password,loginViewModel.getPassword()).get()
+                .addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult()!= null && task.getResult().getDocuments().size()>0){
                 DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                 preferenceManager.putBoolean(Constants.key_Is_Sign_In,true);
                 preferenceManager.putString(Constants.key_UserId,documentSnapshot.getId());
+                preferenceManager.putString(Constants.key_FCM_Token,documentSnapshot.getString(Constants.key_FCM_Token));
                 preferenceManager.putString(Constants.key_Image,documentSnapshot.getString(Constants.key_Image));
                 preferenceManager.putString(Constants.key_Name,documentSnapshot.getString(Constants.key_Name));
                 preferenceManager.putString(Constants.key_Phone,documentSnapshot.getString(Constants.key_Phone));

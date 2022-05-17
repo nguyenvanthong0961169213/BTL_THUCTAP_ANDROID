@@ -20,6 +20,7 @@ import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.model.User;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -71,8 +72,8 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
                 binding.imgUsercontainer.setImageBitmap(Convert.base64ToBitmap(user.getImage()));
             }
             binding.txtNameUserContainer.setText(user.getName());
-            binding.txtChatUserContainer.setText("hohoh");
-            Log.e("TAG", "onCreateView: "+user.getId());
+            binding.txtChatUserContainer.setText(user.getPhoneNumber());
+            Log.e("TAG", "onCreateView: lalalal "+user.getToken());
             binding.ctFriendUserContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -82,6 +83,7 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
                 }
             });
         }
+
 
 
 

@@ -33,7 +33,6 @@ public class User implements Serializable {
         Token = token;
         Image = image;
     }
-
     public User(String name, String phoneNumber) {
         Name = name;
         PhoneNumber = phoneNumber;
@@ -89,3 +88,6 @@ public class User implements Serializable {
 
 
 }
+
+
+

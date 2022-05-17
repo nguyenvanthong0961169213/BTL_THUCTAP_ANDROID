@@ -83,7 +83,7 @@ public class Fragment_Home extends Fragment {
 
     public void LoadingFriend(User Friend) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable("haha",Friend);
+        bundle.putSerializable(Constants.key_Receiver_Id,Friend);
         navigation.navigate(R.id.action_fragment_Home_to_fragmentSceneChat,bundle);
 
     }
@@ -91,7 +91,7 @@ public class Fragment_Home extends Fragment {
     public void LoadingData() {
         data = new ArrayList<>();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection(Constants.key_User_Col).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -104,7 +104,7 @@ public class Fragment_Home extends Fragment {
                             user.setPassword(doc.getString(Constants.key_Password));
                             user.setToken(doc.getString(Constants.key_FCM_Token));
                             user.setImage(doc.getString(Constants.key_Image));
-                            Log.e("TAG", "onComplete: " + doc.getId());
+                            Log.e("TAG", "onComplete: " + user.getToken());
                             user.setId(doc.getId());
                             data.add(user);
                         }
