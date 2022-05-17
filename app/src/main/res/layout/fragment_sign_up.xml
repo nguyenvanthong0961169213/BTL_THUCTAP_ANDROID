@@ -179,6 +179,7 @@
                 android:textSize="20dp"
                 android:text="Have an Account ?"/>
             <Button
+                android:id="@+id/btn_signininfragsignup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign in"

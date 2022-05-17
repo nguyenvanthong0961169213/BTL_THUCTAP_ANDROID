@@ -1,5 +1,6 @@
 package com.example.bt_android_thuctap;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -48,10 +49,16 @@ public class SignUpFragment extends Fragment {
         loginViewModel = new LoginViewModel();
         fragmentSignUpBinding.setLoginViewModel(loginViewModel);
         fragmentSignUpBinding.btnSignUp1.setOnClickListener(v-> SignUpClick());
+        fragmentSignUpBinding.btnSignininfragsignup.setOnClickListener(v -> SignInClick());
         return mview;
     }
 
-
+   private void SignInClick()
+   {
+       FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
+       fragmentTransaction.replace(R.id.view_pager_login,SignInFragment.newInstance());
+       fragmentTransaction.commit();
+   }
     private void SignUpClick() {
         User user = new User(loginViewModel.getPhoneNumber(),loginViewModel.getPassword(),"user");
         if(isValidPassWord(user.getPassword())  == true && isValidPhone(user.getPhoneNumber()) == true)
@@ -60,19 +67,14 @@ public class SignUpFragment extends Fragment {
             FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.view_pager_login,SignInFragment.newInstance());
             transaction.commit();
-
-
         }
         else{
               loginViewModel.validate.set("Đăng kí thất bại");
-
-
        }
     }
     public boolean isValidPassWord(String str){
         if(str.length()>=6){
             return true;
-
         }
         return false;
     }
