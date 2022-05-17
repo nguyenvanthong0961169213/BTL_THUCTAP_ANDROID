@@ -18,6 +18,24 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_add"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_status_off"
+            android:layout_width="15dp"
+            app:civ_border_width="10dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:civ_border_color="@color/off"
+            android:src="@drawable/ic_add"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_status_on"
+            android:layout_width="15dp"
+            app:civ_border_width="10dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            app:civ_border_color="@color/green"
+            android:src="@drawable/ic_add"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
