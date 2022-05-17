@@ -15,15 +15,17 @@ public class User implements Serializable {
     private String Id;
     private String Token;
     private String Image;
+    private String Status;
+
+
+    //Contructer
+    public User(String phoneNumber, String password, String name) {
+        PhoneNumber = phoneNumber;
+        Password = password;
+        Name = name;
+    }
+
     public User(){}
-
-    public String getImage() {
-        return Image;
-    }
-
-    public void setImage(String image) {
-        Image = image;
-    }
 
     public User(String name, String phoneNumber, String password, String id, String token,String image) {
         Name = name;
@@ -38,11 +40,28 @@ public class User implements Serializable {
         PhoneNumber = phoneNumber;
     }
 
-    //Contructer
-    public User(String phoneNumber, String password, String name) {
+
+    //Getters and Setters
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
-        Password = password;
-        Name = name;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) { Password = password; }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 
     public String getId() {
@@ -70,23 +89,13 @@ public class User implements Serializable {
     }
 
 
-    //Getters and Setters
-    public String getPhoneNumber() {
-        return PhoneNumber;
+    public String getImage() {
+        return Image;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        PhoneNumber = phoneNumber;
+    public void setImage(String image) {
+        Image = image;
     }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) { Password = password; }
-
-
-
 }
 
 

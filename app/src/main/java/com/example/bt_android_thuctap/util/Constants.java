@@ -31,6 +31,7 @@ public class Constants {
     public static final String key_Receiver_Image = "imageReceiver";
     public static final String key_Last_Message = "lastMessage";
 
+
     public static final String REMOTE_MSG_AUTHORIZATION = "Authorization";
     public static final String REMOTE_MSG_CONTENT_TYPE = "Content-Type";
     public static final String REMOTE_MSG_DATA = "data";
@@ -47,6 +48,7 @@ public class Constants {
         }
         return remoteMsgHeader;
     }
+
 
 
 

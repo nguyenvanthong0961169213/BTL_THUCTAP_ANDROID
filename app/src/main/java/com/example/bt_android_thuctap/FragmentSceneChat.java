@@ -63,9 +63,6 @@ public class FragmentSceneChat extends Fragment {
     Boolean isStatus;
 
 
-
-
-
     public FragmentSceneChat() {
     }
 
@@ -98,8 +95,6 @@ public class FragmentSceneChat extends Fragment {
 
 
 
-    private void BacktoHome() {
-        navigation.navigate(R.id.action_fragmentSceneChat_to_fragment_Home3);
     }
 
     public void SendMessage(){
