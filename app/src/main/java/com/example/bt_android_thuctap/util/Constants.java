@@ -25,6 +25,7 @@ public class Constants {
     public static final String key_Receiver_Image = "idReceiver";
     public static final String key_Last_Message = "lastMessage";
 
+    public static final String key_Status = "status";
 
 
 

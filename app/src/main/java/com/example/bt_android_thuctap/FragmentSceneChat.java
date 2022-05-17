@@ -50,6 +50,7 @@ public class FragmentSceneChat extends Fragment {
     public User receiverUser;
     FirebaseFirestore firebaseFirestore;
     String conversionsId = null;
+
     public FragmentSceneChat() {
     }
     public static FragmentSceneChat newInstance() {
