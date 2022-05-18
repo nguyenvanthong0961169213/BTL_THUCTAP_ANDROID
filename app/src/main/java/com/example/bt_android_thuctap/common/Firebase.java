@@ -21,7 +21,6 @@ import java.io.IOException;
 public class Firebase {
     FirebaseFirestore firebaseFirestore;
     StorageReference storageReference;
-    FirebaseAuth firebaseAuth;
 
     public void visibleImage(String path, ImageView imageView){
         storageReference = FirebaseStorage.getInstance().getReference().child("images/"+path);

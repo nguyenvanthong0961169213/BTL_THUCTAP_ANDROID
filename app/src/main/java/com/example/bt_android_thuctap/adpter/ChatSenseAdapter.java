@@ -1,15 +1,18 @@
 package com.example.bt_android_thuctap.adpter;
 
+import android.content.Context;
 import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bt_android_thuctap.FragmentSceneChat;
 import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.common.Firebase;
@@ -19,6 +22,8 @@ import com.example.bt_android_thuctap.databinding.ItemContainerSentMessageBindin
 import com.example.bt_android_thuctap.databinding.ItemContainerSentPhotoBinding;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
 import com.example.bt_android_thuctap.model.ChatMessage;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -27,8 +32,10 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static final int VIEW_TYPE_RECEIVED = 2;
     public static final int VIEW_IMAGE_SENT = 3;
     public static final int VIEW_IMAGE_RECEIVED = 4;
-    Firebase firebase;
-
+    Context context;
+    //messager 2
+    //imgae 2
+    // Firebase firebase;
     public List<ChatMessage> data;
     private final String senderID;
     FragmentSceneChat fragmentSceneChat;
@@ -38,6 +45,7 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.data = data;
         this.fragmentSceneChat = fragmentSceneChat;
         this.senderID = fragmentSceneChat.setDataSender().getId();
+        this.context = context;
         Log.e("haha", "ChatSenseAdapter: Ok" );
 
     }
@@ -46,6 +54,7 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @NonNull
     @Override
+    //int viewType ??
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType == VIEW_TYPE_SENT){
             ItemContainerSentMessageBinding binding = ItemContainerSentMessageBinding.inflate(
@@ -63,8 +72,25 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
             return new ReceiverMessageViewHolder(ItemContainerReceivedMessageBinding.inflate(LayoutInflater.from
                     (parent.getContext()),parent,false));
         }
+    }
 
-
+    @Override
+    //
+    public int getItemViewType(int position) {
+        //mess null -> return VIEW_TYPE_RECEIVED
+        if(data.get(position).getMessage() != ""){
+            if(data.get(position).getIdSend().equals(senderID))  { return VIEW_TYPE_SENT;}
+            else {
+                return VIEW_TYPE_RECEIVED;
+            }
+        }
+        else if(data.get(position).getUri()!=""){
+            if(data.get(position).getIdSend().equals(senderID)) {
+                return  VIEW_IMAGE_SENT;
+            }
+            else return VIEW_IMAGE_RECEIVED;
+        }
+        return 0;
     }
 
     @Override
@@ -88,22 +114,7 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
         return data.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if(data.get(position).getMessage() != ""){
-            if(data.get(position).getIdSend().equals(senderID))  { return VIEW_TYPE_SENT;}
-            else {
-                return VIEW_TYPE_RECEIVED;
-            }
-        }
-        else if(data.get(position).getUri() != null){
-            if(data.get(position).getIdSend().equals(senderID)) {
-                return  VIEW_IMAGE_SENT;
-            }
-            else return VIEW_IMAGE_RECEIVED;
-        }
-    return 0;
-    }
+
 
     public class SendMessageViewHolder extends RecyclerView.ViewHolder{
 
@@ -124,11 +135,11 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
         public SendImageViewHolder(ItemContainerSentPhotoBinding hbinding) {
             super(hbinding.getRoot());
             this.binding = hbinding;
-
         }
         public void SetImageSendData(ChatMessage chatMessage){
-           /* firebase.visibleImage("images/"+chatMessage.getUri(),binding.imgSentPhoto);*/
+            new Firebase ().visibleImage (chatMessage.getUri (),binding.imgSentPhoto);
         }
+        // firebase.visbileImage()
     }
 
 
@@ -152,7 +163,6 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
     public class ReceiverImageViewHolder extends RecyclerView.ViewHolder{
-
         ItemContainerReceivedPhotoBinding binding;
         public ReceiverImageViewHolder(ItemContainerReceivedPhotoBinding hbinding) {
             super(hbinding.getRoot());
@@ -160,9 +170,10 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         }
 
-
+        //Set avatar gửi đến + ảnh
         public void SetImageReceiverData(ChatMessage chatMessage){
-         /*   firebase.visibleImage("images/"+chatMessage.getUri(),binding.imgReceiverPhoto);*/
+        /* firebase.visibleImage("images/"+chatMessage.getUri(),binding.imgReceiverPhoto);*/
+            new Firebase ().visibleImage (chatMessage.getUri (),binding.imgReceiverPhoto);
             if(fragmentSceneChat.receiverUser.getImage()!= null){
                 binding.imageProfile2.setImageBitmap(Convert.base64ToBitmap
                         (fragmentSceneChat.receiverUser.getImage()));

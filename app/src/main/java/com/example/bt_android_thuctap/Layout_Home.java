@@ -115,7 +115,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
 
     private void replaceFragment(Fragment fragment)
     {
-        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction  =  getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame,fragment);
         transaction.commit();
     }
