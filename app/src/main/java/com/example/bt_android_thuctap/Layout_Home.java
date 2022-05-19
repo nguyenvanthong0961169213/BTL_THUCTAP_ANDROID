@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Changer_Password;
@@ -22,17 +23,19 @@ import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
 import com.example.bt_android_thuctap.fragmenthomeapp.HomeAppFragment;
 import com.example.bt_android_thuctap.model.User;
+import com.example.bt_android_thuctap.util.BaseActivity;
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Layout_Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Layout_Home extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     PreferenceManager preferenceManager ;
     private DrawerLayout drawerLayout;
     private static final int FRAGMENT_HOME=0;
@@ -51,6 +54,7 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         setSupportActionBar(toolbar);
 
         preferenceManager = new PreferenceManager(this.getApplicationContext());
+        getToken();
         Log.e("sdasadsdasd", "onCreate: "+preferenceManager.getString(Constants.key_Phone) );
 
         drawerLayout=findViewById(R.id.drawer_layout);
@@ -141,6 +145,21 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         Log.e("Du lieu nguoi dung ",user.getName());
         return user;
     }
+
+    private void updateToken(String token){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = database.collection("User").document(preferenceManager.getString(Constants.key_UserId));
+        documentReference.update(Constants.key_FCM_Token,token).addOnSuccessListener(unused -> showToast("Update"))
+                .addOnFailureListener(e -> showToast("Error"));
+
+    }
+    private void getToken(){
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+    private void showToast(String message){
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+    }
+
 
 
 }
