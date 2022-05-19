@@ -17,10 +17,12 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 
 public class CloudStorage {
-    private StorageReference storageRef = FirebaseStorage.getInstance ().getReference ();
+   // private StorageReference storageRef = FirebaseStorage.getInstance ().getReference ();
+    private StorageReference storageRef = FirebaseStorage.getInstance ().getReferenceFromUrl ("gs://w6chat.appspot.com");
     private String idChatMessage;
     public void uploadFromLocal(Uri uri,String idChatMessage){
-        StorageReference mStorageReference = storageRef.child ("images/"+ idChatMessage);
+       // StorageReference mStorageReference = storageRef.child ("images/"+ idChatMessage);
+       StorageReference mStorageReference = storageRef.child ("images/"+ idChatMessage);
         UploadTask uploadTask = mStorageReference.putFile (uri);
 
         uploadTask.addOnFailureListener (new OnFailureListener () {
@@ -36,30 +38,4 @@ public class CloudStorage {
         });
     }
 
-//    public void downloadImageWithFirebaseUi(ImageView imageView,String idChatMessage) {
-//        StorageReference mStorageReference = storageRef.child ("images/"+ idChatMessage);
-//        Glide.with ()
-//    }
-
-//    public void downloadFileToLocalDevice(String name) {
-//        StorageReference mStorageReference = storageRef.child ("images/" + name);
-//        try {
-//            File localFile = File.createTempFile (name, "jpg");
-//
-//            mStorageReference.getFile (localFile).addOnSuccessListener (new OnSuccessListener<FileDownloadTask.TaskSnapshot> () {
-//                @Override
-//                public void onSuccess (FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                    // Local temp file has been created
-//                }
-//            }).addOnFailureListener (new OnFailureListener () {
-//                @Override
-//                public void onFailure (@NonNull Exception exception) {
-//                    // Handle any errors
-//                }
-//            });
-//        }catch (Exception e)
-//        {
-//            Log.e("mTag", "downloadFileToLocalDevice: "+e.toString ());
-//        }
-//    }
 }

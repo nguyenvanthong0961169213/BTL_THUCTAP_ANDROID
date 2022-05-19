@@ -1,5 +1,6 @@
 package com.example.bt_android_thuctap;
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
@@ -13,8 +14,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +25,7 @@ import androidx.collection.LruCache;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.os.TransactionTooLargeException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -78,9 +82,6 @@ import pl.aprilapps.easyphotopicker.EasyImage;
  * create an instance of this fragment.
  */
 public class FragmentSceneChat extends Fragment {
-//    public static final int REQUEST_CODE_CAMERA = 0012;
-//    public static final int REQUEST_CODE_GALLERY = 0013;
-//    private String [] items = {"Camera","Gallery"};
     private final String TAG = "Debuger";
     public  FragmentSceneChatBinding fragmentSceneChatBinding;
     public List<ChatMessage> data;
@@ -102,6 +103,12 @@ public class FragmentSceneChat extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if(outState != null){
+            outState.clear();
+        }
+    }
 
     //inflateView
     @Override
@@ -113,8 +120,10 @@ public class FragmentSceneChat extends Fragment {
         fragmentSceneChatBinding.txtNameFriendChatSense.setText(receiverUser.getName());
         init();
         updateMessage();
-        fragmentSceneChatBinding.btnCamera.setOnClickListener(v -> openImage ());
+        fragmentSceneChatBinding.btnOpenImage.setOnClickListener(v -> openImage ());
+        fragmentSceneChatBinding.btnCamera.setOnClickListener(v -> captureImage());
         fragmentSceneChatBinding.layoutsend.setOnClickListener(v-> SendMessage());
+
         return mview;
     }
 
@@ -139,7 +148,6 @@ public class FragmentSceneChat extends Fragment {
             new ActivityResultCallback<Uri>() {
                 @Override
                 public void onActivityResult(Uri uri) {
-                    //new CloudStorage ().uploadFromLocal (uri);
                     if(uri!=null) {
                         pathImage = uri.toString ();
                         file = uri;
@@ -148,7 +156,10 @@ public class FragmentSceneChat extends Fragment {
                     }
                 }
             });
-
+    private File output = null;
+    private static final int CONTENT_REQUEST=1337;
+    public void captureImage() {
+    }
 
     public void SendMessage(){
         HashMap<String, Object> message = new HashMap<>();
@@ -181,7 +192,6 @@ public class FragmentSceneChat extends Fragment {
             conversion.put(Constants.key_Sender_Image,preferenceManager.getString(Constants.key_Image));
             conversion.put(Constants.key_Receiver_Id,receiverUser.getId());
             conversion.put(Constants.key_Receiver_Name,receiverUser.getName());
-//            Log.e("", "SendMessage: "+receiverUser.getImage() );
             conversion.put(Constants.key_Receiver_Image,receiverUser.getImage());
             conversion.put(Constants.key_Last_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
             conversion.put(Constants.key_Time,new Date());
@@ -286,10 +296,4 @@ public class FragmentSceneChat extends Fragment {
         }
     };
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        if(outState != null){
-            outState.clear();
-        }
-    }
 }

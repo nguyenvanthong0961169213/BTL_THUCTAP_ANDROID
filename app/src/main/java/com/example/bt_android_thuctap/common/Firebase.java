@@ -23,7 +23,7 @@ public class Firebase {
     StorageReference storageReference;
 
     public void visibleImage(String path, ImageView imageView){
-        storageReference = FirebaseStorage.getInstance().getReference().child("images/"+path);
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://w6chat.appspot.com").child("images/"+path);
         try{
             final File localFile = File.createTempFile(path,"jpg");
             storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
