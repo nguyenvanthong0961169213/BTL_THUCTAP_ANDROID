@@ -47,7 +47,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.reactivex.annotations.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,7 +61,6 @@ public class FragmentSceneChat extends Fragment {
     public List<ChatMessage> data;
 
     NavController navigation;
-    ChatSenseAdapter adpater;
 
     public ChatSenseAdapter adpater;
 
@@ -71,7 +69,6 @@ public class FragmentSceneChat extends Fragment {
     FirebaseFirestore firebaseFirestore;
     String conversionsId = null;
     Boolean isStatus;
-
 
     public FragmentSceneChat() {
     }
@@ -94,16 +91,15 @@ public class FragmentSceneChat extends Fragment {
         init();
         updateMessage();
         fragmentSceneChatBinding.layoutsend.setOnClickListener(v-> SendMessage());
-        fragmentSceneChatBinding.imageBack.setOnClickListener(v -> BacktoHome());
-
-
-
+        fragmentSceneChatBinding.imageBack.setOnClickListener(v-> onBack());
         return mview;
     }
 
-
-
+    public void onBack(){
+        navigation = NavHostFragment.findNavController(this);
+        navigation.navigate(R.id.fragment_Home);
     }
+
 
     public void SendMessage(){
         HashMap<String, Object> message = new HashMap<>();
@@ -112,8 +108,8 @@ public class FragmentSceneChat extends Fragment {
         message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
         message.put(Constants.key_Time,new Date());
 
-        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
-        Log.e("converssion", "SendMessage: "+conversionsId );
+/*        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
+        Log.e("converssion", "SendMessage: "+conversionsId );*/
 
         firebaseFirestore.collection(Constants.key_Message_Col).add(message)
 //        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -173,7 +169,6 @@ public class FragmentSceneChat extends Fragment {
                 Log.e("TAG", "SendMessage: aaaaaaaaaaaaaaa");
                 show(exception.getMessage());
             }
-
         }
         fragmentSceneChatBinding.txtinputMessage.setText(null);
     }
@@ -183,13 +178,6 @@ public class FragmentSceneChat extends Fragment {
         User user = layout_home.SetDataUser();
         Log.e("TAG", "setDataSender: "+ user.getName() );
         return user;
-    }
-
-    public void updateMessage(){
-        firebaseFirestore.collection(Constants.key_Message_Col)
-                .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
-                .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
-                .addSnapshotListener(eventListener);
     }
 
     public void  init(){
@@ -203,6 +191,17 @@ public class FragmentSceneChat extends Fragment {
 
     private String getReableDateTime(Date date){
         return new SimpleDateFormat("MMMM dd, yyyy- hh:mm a" , Locale.getDefault()).format(date);
+    }
+
+    public void updateMessage(){
+        firebaseFirestore.collection(Constants.key_Message_Col)
+                .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
+                .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
+                .addSnapshotListener(eventListener);
+        firebaseFirestore.collection(Constants.key_Message_Col)
+                .whereEqualTo(Constants.key_Sender_Id,receiverUser.getId())
+                .whereEqualTo(Constants.key_Receiver_Id,preferenceManager.getString(Constants.key_UserId))
+                .addSnapshotListener(eventListener);
     }
 
     private final EventListener<QuerySnapshot> eventListener = (value, error) ->{
@@ -291,12 +290,13 @@ public class FragmentSceneChat extends Fragment {
                         receiverUser.setToken(value.getString(Constants.key_FCM_Token));
                     }
                     if(isStatus){
-                        fragmentSceneChatBinding.textStatus.setVisibility(View.VISIBLE);
+                        fragmentSceneChatBinding.imageOnl.setVisibility(View.VISIBLE);
+                        fragmentSceneChatBinding.imageOff.setVisibility(View.GONE);
                     }
                     else{
-                        fragmentSceneChatBinding.textStatus.setVisibility(View.GONE);
+                        fragmentSceneChatBinding.imageOnl.setVisibility(View.GONE);
+                        fragmentSceneChatBinding.imageOff.setVisibility(View.VISIBLE);
                     }
-
                 });
     }
 

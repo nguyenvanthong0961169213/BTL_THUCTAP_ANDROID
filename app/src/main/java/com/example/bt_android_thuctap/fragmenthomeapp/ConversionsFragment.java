@@ -56,12 +56,14 @@ public class ConversionsFragment extends Fragment {
         View mview=binding.getRoot();
         init();
         listenerdata();
-
-
-
-
+        navigation = NavHostFragment.findNavController(this);
+        binding.btnTranshome.setOnClickListener(v -> goHome());
         return mview;
 
+    }
+
+    private void goHome() {
+        navigation.navigate(R.id.action_conversionsFragment_to_fragment_Home);
     }
 
     public void loadingFriend(String idFriend){
