@@ -52,7 +52,7 @@
 
                 <TextView
                     android:id="@+id/txtNameFriendChatSense"
-                    android:layout_width="230dp"
+                    android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
@@ -66,35 +66,22 @@
                     android:textSize="28sp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imageCall"
+                    android:id="@+id/imageOff"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:padding="5dp"
-                    android:src="@drawable/ic_baseline_call_24" />
-
+                    android:visibility="gone"
+                    android:src="@drawable/ic_off" />
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imageVideoCall"
+                    android:id="@+id/imageOnl"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="12dp"
                     android:padding="5dp"
-                    android:src="@drawable/ic_baseline_video_call_24" />
+                    android:visibility="visible"
+                    android:src="@drawable/ic_baseline_brightness_1_24" />
             </LinearLayout>
-            <TextView
-                android:id="@+id/textStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/green"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:text="Online"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textAlignment="center"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/appBar"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvChat_sense"
@@ -107,7 +94,7 @@
 
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
-                app:layout_constraintTop_toBottomOf="@id/textStatus" />
+                app:layout_constraintTop_toBottomOf="@id/appBar" />
 
             <LinearLayout
                 android:id="@+id/layoutIcon"

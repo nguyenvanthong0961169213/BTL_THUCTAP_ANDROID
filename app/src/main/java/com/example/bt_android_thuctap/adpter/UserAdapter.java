@@ -76,7 +76,8 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
             binding.txtChatUserContainer.setText(user.getPhoneNumber());
             Log.e("TAG", "onCreateView: lalalal "+user.getToken());
 
-            binding.txtChatUserContainer.setText("hohoh");
+            binding.txtChatUserContainer.setText(user.getPhoneNumber());
+
             if(user.getStatus().equals("online")){
                 binding.imgStatusOn.setVisibility(View.VISIBLE);
                 binding.imgStatusOff.setVisibility(View.GONE);

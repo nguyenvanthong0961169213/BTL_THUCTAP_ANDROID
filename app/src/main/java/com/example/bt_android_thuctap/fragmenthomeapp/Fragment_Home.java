@@ -52,7 +52,7 @@ public class Fragment_Home extends Fragment {
         navigation = NavHostFragment.findNavController(this);
         LoadingData();
         userAdapter = new UserAdapter(data,this);
-        fragmentHomeBinding.edtSearch.setOnClickListener(v -> goConversions());
+        fragmentHomeBinding.btnPhonebook.setOnClickListener(v -> goConversions());
         return mview;
     }
 

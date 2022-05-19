@@ -108,8 +108,8 @@ public class FragmentSceneChat extends Fragment {
         message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
         message.put(Constants.key_Time,new Date());
 
-        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
-        Log.e("converssion", "SendMessage: "+conversionsId );
+/*        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
+        Log.e("converssion", "SendMessage: "+conversionsId );*/
 
         firebaseFirestore.collection(Constants.key_Message_Col).add(message)
 //        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -290,10 +290,12 @@ public class FragmentSceneChat extends Fragment {
                         receiverUser.setToken(value.getString(Constants.key_FCM_Token));
                     }
                     if(isStatus){
-                        fragmentSceneChatBinding.textStatus.setVisibility(View.VISIBLE);
+                        fragmentSceneChatBinding.imageOnl.setVisibility(View.VISIBLE);
+                        fragmentSceneChatBinding.imageOff.setVisibility(View.GONE);
                     }
                     else{
-                        fragmentSceneChatBinding.textStatus.setVisibility(View.GONE);
+                        fragmentSceneChatBinding.imageOnl.setVisibility(View.GONE);
+                        fragmentSceneChatBinding.imageOff.setVisibility(View.VISIBLE);
                     }
                 });
     }

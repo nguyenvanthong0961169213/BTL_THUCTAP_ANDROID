@@ -8,53 +8,79 @@
             type="com.example.bt_android_thuctap.viewmodel.LoginViewModel" />
 
     </data>
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:id="@+id/ctFriendUserContainer"
-        android:layout_height="70dp"
-        android:gravity="center_vertical">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_usercontainer"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_add"/>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ctFriendUserContainer"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_usercontainer"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_add"
+                android:layout_marginLeft="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtNameUserContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="Name"
+                    android:textSize="23dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtChatUserContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:text="Chat"
+                    android:textSize="18dp" />
+            </LinearLayout>
+        </LinearLayout>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_status_off"
-            android:layout_width="15dp"
-            app:civ_border_width="10dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="20dp"
-            android:visibility="visible"
-            app:civ_border_color="@color/off"
-            android:src="@drawable/ic_add"/>
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:civ_border_width="3dp"
+            android:src="@drawable/ic_off"
+            app:civ_border_color="@color/white"
+            app:civ_circle_background_color="@color/off"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@+id/ctFriendUserContainer"
+            app:layout_constraintBottom_toBottomOf="@id/ctFriendUserContainer"
+            app:layout_constraintLeft_toLeftOf="@id/ctFriendUserContainer"
+            app:layout_constraintRight_toRightOf="@id/ctFriendUserContainer"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintVertical_bias="0.87"
+            />
+        <!--        android:visibility="gone"-->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_status_on"
-            android:layout_width="15dp"
-            app:civ_border_width="10dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:civ_border_width="3dp"
             android:visibility="gone"
-            app:civ_border_color="@color/green"
-            android:src="@drawable/ic_add"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp">
-            <TextView
-                android:id="@+id/txtNameUserContainer"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="Name"
-                android:textSize="23dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/txtChatUserContainer"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Chat"
-                android:textSize="18dp"/>
-        </LinearLayout>
-    </LinearLayout>
+            android:src="@drawable/ic_baseline_brightness_1_24"
+            app:civ_border_color="@color/white"
+            app:civ_circle_background_color="@color/green"
+            app:layout_constraintTop_toTopOf="@+id/ctFriendUserContainer"
+            app:layout_constraintBottom_toBottomOf="@id/ctFriendUserContainer"
+            app:layout_constraintLeft_toLeftOf="@id/ctFriendUserContainer"
+            app:layout_constraintRight_toRightOf="@id/ctFriendUserContainer"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintVertical_bias="0.87"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
