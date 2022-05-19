@@ -20,9 +20,20 @@
         android:id="@+id/fragmentSceneChat"
         android:name="com.example.bt_android_thuctap.FragmentSceneChat"
         android:label="fragment_scene_chat"
-        tools:layout="@layout/fragment_scene_chat" />
+        tools:layout="@layout/fragment_scene_chat" >
+        <action
+            android:id="@+id/action_fragmentSceneChat_to_fragment_Home3"
+            app:destination="@id/fragment_Home" />
+    </fragment>
     <fragment
         android:id="@+id/conversionsFragment"
         android:name="com.example.bt_android_thuctap.fragmenthomeapp.ConversionsFragment"
-        android:label="ConversionsFragment" />
+        android:label="ConversionsFragment" >
+        <action
+            android:id="@+id/action_conversionsFragment_to_fragmentSceneChat"
+            app:destination="@id/fragmentSceneChat" />
+        <action
+            android:id="@+id/action_conversionsFragment_to_fragment_Home"
+            app:destination="@id/fragment_Home" />
+    </fragment>
 </navigation>

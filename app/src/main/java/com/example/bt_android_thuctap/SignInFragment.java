@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -69,6 +71,21 @@ public class SignInFragment extends Fragment {
 
         loginViewModel = new LoginViewModel();
         fragmentSignInBinding.setLoginViewModel(loginViewModel);
+
+        //Animation
+        Animation animation_cloud_1=AnimationUtils.loadAnimation(getActivity(),R.anim.move_cloud_1);
+        fragmentSignInBinding.cloud1.setAnimation(animation_cloud_1);
+
+        Animation animation_cloud_2=AnimationUtils.loadAnimation(getActivity(),R.anim.move_cloud_2);
+        fragmentSignInBinding.cloud2.setAnimation(animation_cloud_2);
+
+        Animation animation_sun=AnimationUtils.loadAnimation(getActivity(),R.anim.move_sun);
+        animation_sun.setStartOffset(1000);
+        fragmentSignInBinding.sun.setAnimation(animation_sun);
+
+        Animation animation= AnimationUtils.loadAnimation(getActivity(),R.anim.move_text_chat);
+        fragmentSignInBinding.imageTxtChat.setAnimation(animation);
+
         fragmentSignInBinding.dayNightSwitch.setListener(new DayNightSwitchListener() {
             @Override
             public void onSwitch(boolean is_night) {
@@ -88,12 +105,15 @@ public class SignInFragment extends Fragment {
 
     public void SignInClick() {
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("User").whereEqualTo("phone",loginViewModel.getPhoneNumber())
-                .whereEqualTo("password",loginViewModel.getPassword()).get().addOnCompleteListener(task -> {
+        firebaseFirestore.collection(Constants.key_User_Col)
+                .whereEqualTo(Constants.key_Phone,loginViewModel.getPhoneNumber())
+                .whereEqualTo(Constants.key_Password,loginViewModel.getPassword()).get()
+                .addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult()!= null && task.getResult().getDocuments().size()>0){
                 DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                 preferenceManager.putBoolean(Constants.key_Is_Sign_In,true);
                 preferenceManager.putString(Constants.key_UserId,documentSnapshot.getId());
+                preferenceManager.putString(Constants.key_FCM_Token,documentSnapshot.getString(Constants.key_FCM_Token));
                 preferenceManager.putString(Constants.key_Image,documentSnapshot.getString(Constants.key_Image));
                 preferenceManager.putString(Constants.key_Name,documentSnapshot.getString(Constants.key_Name));
                 preferenceManager.putString(Constants.key_Phone,documentSnapshot.getString(Constants.key_Phone));
@@ -115,8 +135,4 @@ public class SignInFragment extends Fragment {
         transaction.replace(R.id.view_pager_login,SignUpFragment.newInstance());
         transaction.commit();
     }
-
-
-
-
 }

@@ -3,6 +3,8 @@ package com.example.bt_android_thuctap.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.bt_android_thuctap.model.User;
+
 public class PreferenceManager {
     private final SharedPreferences sharedPreferences;
 
