@@ -12,19 +12,22 @@ import android.view.ViewGroup;
 
 import com.example.bt_android_thuctap.databinding.FragmentSignUpBinding;
 import com.example.bt_android_thuctap.model.User;
+import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.viewmodel.LoginViewModel;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpFragment extends Fragment {
 
-
-
     FragmentSignUpBinding fragmentSignUpBinding;
     LoginViewModel loginViewModel;
     ViewPagerLoginAdaper viewPagerLoginAdaper;
-
+    FirebaseFirestore firebaseFirestore;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -45,7 +48,7 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         fragmentSignUpBinding= FragmentSignUpBinding.inflate(inflater, container, false);
         View mview=fragmentSignUpBinding.getRoot();
-
+        firebaseFirestore = FirebaseFirestore.getInstance();
         loginViewModel = new LoginViewModel();
         fragmentSignUpBinding.setLoginViewModel(loginViewModel);
         fragmentSignUpBinding.btnSignUp1.setOnClickListener(v-> SignUpClick());
@@ -64,6 +67,14 @@ public class SignUpFragment extends Fragment {
         if(isValidPassWord(user.getPassword())  == true && isValidPhone(user.getPhoneNumber()) == true)
         {
 //           loginViewModel.validate.set("Đăng kí thành công");
+            Map<String,Object> newUser = new HashMap<>();
+            newUser.put(Constants.key_Name,"new User");
+            newUser.put(Constants.key_Phone, loginViewModel.getPhoneNumber());
+            newUser.put(Constants.key_Password, loginViewModel.getPassword());
+
+            firebaseFirestore.collection(Constants.key_User_Col)
+                    .add(newUser);
+
             FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.view_pager_login,SignInFragment.newInstance());
             transaction.commit();
