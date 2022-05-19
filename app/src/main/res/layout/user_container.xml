@@ -24,7 +24,7 @@
             app:civ_border_width="10dp"
             android:layout_height="15dp"
             android:layout_marginTop="20dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:civ_border_color="@color/off"
             android:src="@drawable/ic_add"/>
         <de.hdodenhof.circleimageview.CircleImageView

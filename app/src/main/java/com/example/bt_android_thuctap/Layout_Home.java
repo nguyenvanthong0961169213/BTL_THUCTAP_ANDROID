@@ -39,6 +39,8 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
     private static final int FRAGMENT_UPDATE_PROFILE=1;
     private static final int FRAGMENT_CHANGE_PASSWORD=2;
 //    private static final int FRAGMENT_CHAT_SENSE=3;
+    DocumentReference documentReference;
+    FirebaseFirestore firebaseFirestore;
 
     private int currentFragment=FRAGMENT_HOME;
 
@@ -52,6 +54,11 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
 
         preferenceManager = new PreferenceManager(this.getApplicationContext());
         Log.e("sdasadsdasd", "onCreate: "+preferenceManager.getString(Constants.key_Phone) );
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        documentReference = firebaseFirestore.collection("User")
+                .document(preferenceManager.getString(Constants.key_UserId));
+
 
         drawerLayout=findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,
@@ -142,5 +149,16 @@ public class Layout_Home extends AppCompatActivity implements NavigationView.OnN
         return user;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        documentReference.update(Constants.key_Status, "offline");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        documentReference.update(Constants.key_Status, "online");
+    }
 
 }

@@ -3,6 +3,8 @@ package com.example.bt_android_thuctap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +46,8 @@ public class FragmentSceneChat extends Fragment {
     public User receiverUser;
     FirebaseFirestore firebaseFirestore;
     String conversionsId = null;
+    NavController navigation;
+    Boolean isStatus;
 
     public FragmentSceneChat() {
     }
@@ -64,7 +68,13 @@ public class FragmentSceneChat extends Fragment {
         init();
         updateMessage();
         fragmentSceneChatBinding.layoutsend.setOnClickListener(v-> SendMessage());
+        fragmentSceneChatBinding.imageBack.setOnClickListener(v-> onBack());
         return mview;
+    }
+
+    public void onBack(){
+        navigation = NavHostFragment.findNavController(this);
+        navigation.navigate(R.id.fragment_Home);
     }
 
     public void SendMessage(){
@@ -90,7 +100,6 @@ public class FragmentSceneChat extends Fragment {
             conversion.put(Constants.key_Last_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
             conversion.put(Constants.key_Time,new Date());
             addConversion(conversion);
-
         }
         fragmentSceneChatBinding.txtinputMessage.setText(null);
     }
@@ -100,17 +109,6 @@ public class FragmentSceneChat extends Fragment {
         User user = layout_home.SetDataUser();
         Log.e("TAG", "setDataSender: "+ user.getName() );
         return user;
-    }
-
-    public void updateMessage(){
-        firebaseFirestore.collection(Constants.key_Message_Col)
-                .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
-                .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
-                .addSnapshotListener(eventListener);
-        firebaseFirestore.collection(Constants.key_Message_Col)
-                .whereEqualTo(Constants.key_Sender_Id,receiverUser.getId())
-                .whereEqualTo(Constants.key_Receiver_Id,preferenceManager.getString(Constants.key_UserId))
-                .addSnapshotListener(eventListener);
     }
 
     public void  init(){
@@ -123,6 +121,17 @@ public class FragmentSceneChat extends Fragment {
 
     private String getReableDateTime(Date date){
         return new SimpleDateFormat("MMMM dd, yyyy- hh:mm a" , Locale.getDefault()).format(date);
+    }
+
+    public void updateMessage(){
+        firebaseFirestore.collection(Constants.key_Message_Col)
+                .whereEqualTo(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId))
+                .whereEqualTo(Constants.key_Receiver_Id,receiverUser.getId())
+                .addSnapshotListener(eventListener);
+        firebaseFirestore.collection(Constants.key_Message_Col)
+                .whereEqualTo(Constants.key_Sender_Id,receiverUser.getId())
+                .whereEqualTo(Constants.key_Receiver_Id,preferenceManager.getString(Constants.key_UserId))
+                .addSnapshotListener(eventListener);
     }
 
     private final EventListener<QuerySnapshot> eventListener = (value, error) ->{
@@ -193,4 +202,32 @@ public class FragmentSceneChat extends Fragment {
             conversionsId = documentSnapshot.getId();
         }
     };
+
+    private void listenerStatus(){
+        firebaseFirestore.collection(Constants.key_User_Col)
+                .document(receiverUser.getId())
+                .addSnapshotListener(getActivity(),(value, error) -> {
+                    if(error != null){
+                        return;
+                    }
+                    if(value != null){
+                        if(value.getString(Constants.key_Status) != null){
+                            String availability = value.getString(Constants.key_Status);
+                            isStatus = availability.equals("online");
+                        }
+                    }
+                    if(isStatus){
+                        fragmentSceneChatBinding.textStatus.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        fragmentSceneChatBinding.textStatus.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listenerStatus();
+    }
 }

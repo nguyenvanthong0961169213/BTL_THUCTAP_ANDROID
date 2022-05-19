@@ -1,7 +1,5 @@
 package com.example.bt_android_thuctap.fragmenthomeapp;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,37 +8,25 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.NavHost;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bt_android_thuctap.FragmentSceneChat;
-import com.example.bt_android_thuctap.Layout_Home;
 import com.example.bt_android_thuctap.R;
-import com.example.bt_android_thuctap.adpter.RecentConversationsAdapter;
 import com.example.bt_android_thuctap.adpter.UserAdapter;
 import com.example.bt_android_thuctap.databinding.FragmentHomeBinding;
-import com.example.bt_android_thuctap.databinding.FragmentSignUpBinding;
-import com.example.bt_android_thuctap.model.ChatMessage;
 import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.util.Constants;
 import com.example.bt_android_thuctap.util.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Fragment_Home extends Fragment {
 
@@ -48,7 +34,6 @@ public class Fragment_Home extends Fragment {
     NavController navigation;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-    DocumentReference documentReference;
     UserAdapter userAdapter;
     List<User> data;
     PreferenceManager preferenceManager;
@@ -84,15 +69,13 @@ public class Fragment_Home extends Fragment {
     public void LoadingData() {
         data = new ArrayList<>();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        documentReference = firebaseFirestore.collection("User")
-                .document(preferenceManager.getString(Constants.key_UserId));
         firebaseFirestore.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot doc : task.getResult()){
-                        if(doc.getId().equals(preferenceManager.getString
-                                (Constants.key_UserId)) == false) {
+                        if(!doc.getId().equals(preferenceManager.getString
+                                (Constants.key_UserId))) {
                             User user = new User();
                             user.setName(doc.getString(Constants.key_Name));
                             user.setPhoneNumber(doc.getString(Constants.key_Phone));
@@ -112,15 +95,43 @@ public class Fragment_Home extends Fragment {
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        documentReference.update(Constants.key_Status, "offline");
-    }
 
+    public void updateStatus(){
+        data.clear();
+        firebaseFirestore.collection(Constants.key_User_Col)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        if(!doc.getId().equals(preferenceManager.getString
+                                (Constants.key_UserId))) {
+                            firebaseFirestore.collection(Constants.key_User_Col)
+                                    .document(doc.getId())
+                                    .addSnapshotListener(getActivity(),(value, error) -> {
+                                        if(error != null){
+                                            return;
+                                        }
+                                        if(value != null){
+                                            if(value.getString(Constants.key_Status) != null){
+                                                for(User user : data)
+                                                    if(user.getId().equals(value.getId())){
+                                                        user.setStatus(value.getString(Constants.key_Status));
+                                                    }
+                                            }
+                                        }
+                                        userAdapter.notifyDataSetChanged();
+                                    });
+                        }
+                    }
+                }
+            }
+        });
+    }
     @Override
     public void onResume() {
         super.onResume();
-        documentReference.update(Constants.key_Status, "online");
+        updateStatus();
     }
 }
