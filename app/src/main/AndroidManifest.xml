@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BT_Android_ThucTap">
+
         <activity
             android:name=".Layout_Home"
             android:exported="false" >

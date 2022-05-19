@@ -156,10 +156,23 @@ public class FragmentSceneChat extends Fragment {
                     }
                 }
             });
-    private File output = null;
-    private static final int CONTENT_REQUEST=1337;
     public void captureImage() {
+        Intent intent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri locationForPhotos = Uri.fromFile (getContext ().getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+        intent.putExtra (MediaStore.EXTRA_OUTPUT,Uri.withAppendedPath (locationForPhotos,"w6chatcaptureimage"));
+        intent.addFlags (Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags (Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        mGetContext1.launch (intent);
     }
+
+        ActivityResultLauncher<Intent> mGetContext1 = registerForActivityResult (new ActivityResultContracts.StartActivityForResult (),
+                new ActivityResultCallback<ActivityResult> () {
+                    @Override
+                    public void onActivityResult (ActivityResult result) {
+                        Bitmap bitmap = result.getData ().getParcelableExtra ("data");
+                        fragmentSceneChatBinding.imageView2.setImageBitmap (bitmap);
+                    }
+                });
 
     public void SendMessage(){
         HashMap<String, Object> message = new HashMap<>();
@@ -196,7 +209,6 @@ public class FragmentSceneChat extends Fragment {
             conversion.put(Constants.key_Last_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
             conversion.put(Constants.key_Time,new Date());
             addConversion(conversion);
-
         }
         pathImage = null;
     }
