@@ -19,6 +19,7 @@ import com.example.bt_android_thuctap.R;
 import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.databinding.UserContainerBinding;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
+import com.example.bt_android_thuctap.model.GroupChat;
 import com.example.bt_android_thuctap.model.User;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
         fragment_Home = fragmentHome;
         Log.e("TAG", "UserAdapter: ");
     }
+
 
     @NonNull
     @Override
@@ -92,4 +94,5 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.UserViewHolde
             });
         }
     }
+
 }

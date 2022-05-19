@@ -134,6 +134,7 @@ public class FragmentSceneChat extends Fragment {
             for(DocumentChange documentChange : value.getDocumentChanges()){
                 if(documentChange.getType() == DocumentChange.Type.ADDED){
                     ChatMessage chatMessage = new ChatMessage();
+
                     chatMessage.setIdSend(documentChange.getDocument().getString(Constants.key_Sender_Id));
                     chatMessage.setIdReceiver(documentChange.getDocument().getString(Constants.key_Receiver_Id));
                     chatMessage.setMessage(documentChange.getDocument().getString(Constants.key_Message));

@@ -41,6 +41,10 @@ public class User implements Serializable {
         PhoneNumber = phoneNumber;
     }
 
+    public User(String phone) {
+        PhoneNumber = phone;
+    }
+
 
     //Getters and Setters
     public String getPhoneNumber() {

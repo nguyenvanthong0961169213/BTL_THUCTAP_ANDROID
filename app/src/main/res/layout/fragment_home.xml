@@ -26,6 +26,25 @@
                 android:drawablePadding="10dp"
                 android:hint="Search..."
                 android:paddingLeft="20dp" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Group"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/addGroupBtn"
+                android:paddingLeft="20dp"
+                android:drawablePadding="10dp"></Button>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rectanglesGroup"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rectanglesUser"
                 android:layout_marginTop="30dp"
@@ -36,6 +55,8 @@
                 android:overScrollMode="never"
                 android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
         </LinearLayout>
+
     </FrameLayout>
 </layout>

@@ -12,5 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>>
+    <style name="MyTitleTextStyle">
+        <item name="android:textColor">#FFEB3B</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+    <style name="AlertDiaLog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        ...
+        <item name="android:windowTitleStyle">@style/MyTitleTextStyle</item>
     </style>
 </resources>

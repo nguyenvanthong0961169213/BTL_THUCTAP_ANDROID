@@ -11,6 +11,13 @@ public class Constants {
     public static final String key_Is_Sign_In = "isSignIn";
     public static final String key_FCM_Token = "fcmtoken";
 
+    public static final String key_Group_Id_Doc = "groupId";
+    public static final String key_Group_Col = "Group";
+    public static final String key_Group_Name = "Name";
+    public static final String key_Group_Id = "Id";
+    public static final String key_Group_Member = "IdMember";
+    public static final String key_Group_Image = "ImageGroup";
+
     public static final String key_Message_Col = "ChatMessage";
     public static final String key_Sender_Id = "idSend";
     public static final String key_Receiver_Id = "idReceiver";
