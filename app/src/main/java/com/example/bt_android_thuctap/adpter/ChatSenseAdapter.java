@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bt_android_thuctap.FragmentSceneChat;
+import com.example.bt_android_thuctap.R;
 import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.databinding.ItemContainerReceivedMessageBinding;
 import com.example.bt_android_thuctap.databinding.ItemContainerSentMessageBinding;
@@ -21,7 +22,7 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static final int VIEW_TYPE_SENT = 1;
     public static final int VIEW_TYPE_RECEIVED = 2;
 
-
+    public ItemContainerSentMessageBinding binding;
     public List<ChatMessage> data;
     private final String senderID;
     FragmentSceneChat fragmentSceneChat;
@@ -31,16 +32,12 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.data = data;
         this.fragmentSceneChat = fragmentSceneChat;
         this.senderID = fragmentSceneChat.setDataSender().getId();
-        Log.e("haha", "ChatSenseAdapter: Ok" );
-
     }
-
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(viewType == VIEW_TYPE_SENT){
-            ItemContainerSentMessageBinding binding = ItemContainerSentMessageBinding.inflate(
+            binding = ItemContainerSentMessageBinding.inflate(
                     LayoutInflater.from
                     (parent.getContext()),parent,false);
             return new SendMessageViewHolder(binding);
@@ -86,6 +83,7 @@ public class ChatSenseAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         public void SetMessageSendData(ChatMessage chatMessage){
             binding.txtMessageSent.setText(chatMessage.getMessage());
+           // binding.checkSend.setImageResource(R.drawable.ic_send_success);
         }
     }
 
