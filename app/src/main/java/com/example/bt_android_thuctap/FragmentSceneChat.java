@@ -1,7 +1,11 @@
 package com.example.bt_android_thuctap;
 
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 import com.example.bt_android_thuctap.adpter.ChatSenseAdapter;
 import com.example.bt_android_thuctap.databinding.FragmentSceneChatBinding;
 import com.example.bt_android_thuctap.databinding.ItemContainerSentMessageBinding;
+import com.example.bt_android_thuctap.firebase.FireBase;
 import com.example.bt_android_thuctap.model.ChatMessage;
 import com.example.bt_android_thuctap.model.User;
 import com.example.bt_android_thuctap.network.ApiClient;
@@ -59,16 +64,15 @@ import retrofit2.Response;
 public class FragmentSceneChat extends Fragment {
     public  FragmentSceneChatBinding fragmentSceneChatBinding;
     public List<ChatMessage> data;
-
     NavController navigation;
-
     public ChatSenseAdapter adpater;
-
     PreferenceManager preferenceManager;
     public User receiverUser;
     FirebaseFirestore firebaseFirestore;
     String conversionsId = null;
     Boolean isStatus;
+    String pathImage;
+    Uri file;
 
     public FragmentSceneChat() {
     }
@@ -82,17 +86,33 @@ public class FragmentSceneChat extends Fragment {
                              Bundle savedInstanceState) {
         fragmentSceneChatBinding= FragmentSceneChatBinding.inflate(inflater, container, false);
         View mview=fragmentSceneChatBinding.getRoot();
-
         receiverUser = (User) getArguments().getSerializable(Constants.key_Receiver_Id);
-
-
         fragmentSceneChatBinding.txtNameFriendChatSense.setText(receiverUser.getName());
-
         init();
         updateMessage();
+        fragmentSceneChatBinding.btnCamera.setOnClickListener(v -> openCamera());
+        fragmentSceneChatBinding.btnOpenImage.setOnClickListener (v -> openImage());
         fragmentSceneChatBinding.layoutsend.setOnClickListener(v-> SendMessage());
         fragmentSceneChatBinding.imageBack.setOnClickListener(v-> onBack());
         return mview;
+    }
+
+    void openCamera() {
+        mGetContent.launch ("image/*");
+    }
+    ActivityResultLauncher<String> mGetContent = registerForActivityResult (new ActivityResultContracts.GetContent (),
+            new ActivityResultCallback<Uri> () {
+                @Override
+                public void onActivityResult (Uri result) {
+                    pathImage = result.toString ();
+                    file = result;
+                    fragmentSceneChatBinding.imageView2.setImageURI (result);
+                    fragmentSceneChatBinding.imageView2.setVisibility (View.VISIBLE);
+                }
+            });
+
+    void openImage() {
+
     }
 
     public void onBack(){
@@ -105,31 +125,27 @@ public class FragmentSceneChat extends Fragment {
         HashMap<String, Object> message = new HashMap<>();
         message.put(Constants.key_Sender_Id,preferenceManager.getString(Constants.key_UserId));
         message.put(Constants.key_Receiver_Id,receiverUser.getId());
-        message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
+        if(fragmentSceneChatBinding.txtinputMessage.getText().toString().isEmpty()){
+            message.put(Constants.key_Message,"");
+        }
+        else{
+            message.put(Constants.key_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
+        }
+        if(pathImage == null){
+            message.put(Constants.key_Image,"");
+        }
+        else{
+            message.put(Constants.key_Image,pathImage);
+        }
         message.put(Constants.key_Time,new Date());
-
-/*        firebaseFirestore.collection(Constants.key_Message_Col).add(message);
-        Log.e("converssion", "SendMessage: "+conversionsId );*/
-
         firebaseFirestore.collection(Constants.key_Message_Col).add(message)
-//        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//             @Override
-//             public void onSuccess(DocumentReference documentReference) {
-//                 adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
-//             }
-//        })
         .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
+                //adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
+                Log.i ("MyTag","Fail to add message");
             }
         });
-//        .addOnFailureListener(new OnFailureListener() {
-//            @Override
-//             public void onFailure(@NonNull Exception e) {
-//             adpater.binding.checkSend.setImageResource(R.drawable.ic_send_success);
-//              }
-//        });
 
         if(conversionsId != null){
             updateConversion(fragmentSceneChatBinding.txtinputMessage.getText().toString());
@@ -141,7 +157,6 @@ public class FragmentSceneChat extends Fragment {
             conversion.put(Constants.key_Sender_Image,preferenceManager.getString(Constants.key_Image));
             conversion.put(Constants.key_Receiver_Id,receiverUser.getId());
             conversion.put(Constants.key_Receiver_Name,receiverUser.getName());
-//            Log.e("", "SendMessage: "+receiverUser.getImage() );
             conversion.put(Constants.key_Receiver_Image,receiverUser.getImage());
             conversion.put(Constants.key_Last_Message,fragmentSceneChatBinding.txtinputMessage.getText().toString());
             conversion.put(Constants.key_Time,new Date());
@@ -170,6 +185,8 @@ public class FragmentSceneChat extends Fragment {
                 show(exception.getMessage());
             }
         }
+        pathImage = null;
+        fragmentSceneChatBinding.imageView2.setVisibility (View.INVISIBLE);
         fragmentSceneChatBinding.txtinputMessage.setText(null);
     }
 
@@ -216,9 +233,12 @@ public class FragmentSceneChat extends Fragment {
                     chatMessage.setIdSend(documentChange.getDocument().getString(Constants.key_Sender_Id));
                     chatMessage.setIdReceiver(documentChange.getDocument().getString(Constants.key_Receiver_Id));
                     chatMessage.setMessage(documentChange.getDocument().getString(Constants.key_Message));
+                    chatMessage.setUri(documentChange.getDocument().getId ());
                     chatMessage.setTime(getReableDateTime(documentChange.getDocument().getDate(Constants.key_Time)));
                     chatMessage.setDateObject(documentChange.getDocument().getDate(Constants.key_Time));
                     data.add(chatMessage);
+                    if(file != null & pathImage == null)
+                        new FireBase ().uploadFromLocal (file,chatMessage.getUri ());
 
                 }
             }

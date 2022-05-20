@@ -8,6 +8,17 @@ public class ChatMessage {
     String message;
     String Time;
     Date dateObject;
+
+    public String getUri () {
+        return uri;
+    }
+
+    public void setUri (String uri) {
+        this.uri = uri;
+    }
+
+    String uri;
+
     public String conversionId , conversionName , conversionImage ;
 
     public ChatMessage(){}
