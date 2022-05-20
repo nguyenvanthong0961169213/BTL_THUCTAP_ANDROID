@@ -112,24 +112,12 @@ public class FragmentSceneChat extends Fragment {
         Log.e("converssion", "SendMessage: "+conversionsId );*/
 
         firebaseFirestore.collection(Constants.key_Message_Col).add(message)
-//        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//             @Override
-//             public void onSuccess(DocumentReference documentReference) {
-//                 adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
-//             }
-//        })
         .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
+//                adpater.binding.checkSend.setImageResource(R.drawable.ic_send_unsuccess);
             }
         });
-//        .addOnFailureListener(new OnFailureListener() {
-//            @Override
-//             public void onFailure(@NonNull Exception e) {
-//             adpater.binding.checkSend.setImageResource(R.drawable.ic_send_success);
-//              }
-//        });
 
         if(conversionsId != null){
             updateConversion(fragmentSceneChatBinding.txtinputMessage.getText().toString());

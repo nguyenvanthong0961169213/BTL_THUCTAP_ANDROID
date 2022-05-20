@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 //import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
 import com.example.bt_android_thuctap.databinding.FragmentSignInBinding;
@@ -125,7 +126,8 @@ public class SignInFragment extends Fragment {
                 startActivity(intent);
             }
             else{
-                loginViewModel.validate.set("Dang nhap that bai");
+                //loginViewModel.validate.set("Dang nhap that bai");
+                Toast.makeText(getActivity(),"Mật Khẩu Hoặc Tài Khoản Không Đúng",Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.bt_android_thuctap.databinding.FragmentSignUpBinding;
 import com.example.bt_android_thuctap.model.User;
@@ -28,6 +29,7 @@ public class SignUpFragment extends Fragment {
     LoginViewModel loginViewModel;
     ViewPagerLoginAdaper viewPagerLoginAdaper;
     FirebaseFirestore firebaseFirestore;
+    String confirm, pw,phone;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -46,54 +48,72 @@ public class SignUpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentSignUpBinding= FragmentSignUpBinding.inflate(inflater, container, false);
-        View mview=fragmentSignUpBinding.getRoot();
+        fragmentSignUpBinding = FragmentSignUpBinding.inflate(inflater, container, false);
+        View mview = fragmentSignUpBinding.getRoot();
         firebaseFirestore = FirebaseFirestore.getInstance();
         loginViewModel = new LoginViewModel();
         fragmentSignUpBinding.setLoginViewModel(loginViewModel);
-        fragmentSignUpBinding.btnSignUp1.setOnClickListener(v-> SignUpClick());
+        fragmentSignUpBinding.btnSignUp1.setOnClickListener(v -> SignUpClick());
         fragmentSignUpBinding.btnSignininfragsignup.setOnClickListener(v -> SignInClick());
         return mview;
     }
 
-   private void SignInClick()
-   {
-       FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
-       fragmentTransaction.replace(R.id.view_pager_login,SignInFragment.newInstance());
-       fragmentTransaction.commit();
-   }
+    private void SignInClick() {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.view_pager_login, SignInFragment.newInstance());
+        fragmentTransaction.commit();
+    }
+
     private void SignUpClick() {
-        User user = new User(loginViewModel.getPhoneNumber(),loginViewModel.getPassword(),"user");
-        if(isValidPassWord(user.getPassword())  == true && isValidPhone(user.getPhoneNumber()) == true)
-        {
+        User user = new User(loginViewModel.getPhoneNumber(), loginViewModel.getPassword(), "user");
+        pw = fragmentSignUpBinding.txtPassword.getText().toString().trim();
+        confirm = fragmentSignUpBinding.txtConfirm.getText().toString().trim();
+        phone=fragmentSignUpBinding.txtPhoneSignup.getText().toString().trim();
+        boolean test = isValidPassWord();
+        if (test == true && isValidPhone(user.getPhoneNumber()) == true) {
 //           loginViewModel.validate.set("Đăng kí thành công");
-            Map<String,Object> newUser = new HashMap<>();
-            newUser.put(Constants.key_Name,"new User");
+            Map<String, Object> newUser = new HashMap<>();
+            newUser.put(Constants.key_Name, "new User");
             newUser.put(Constants.key_Phone, loginViewModel.getPhoneNumber());
             newUser.put(Constants.key_Password, loginViewModel.getPassword());
-
+            newUser.put(Constants.key_Status, Constants.key_Status_Off);
             firebaseFirestore.collection(Constants.key_User_Col)
                     .add(newUser);
-
-            FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.view_pager_login,SignInFragment.newInstance());
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.view_pager_login, SignInFragment.newInstance());
             transaction.commit();
+        } else {
+           // loginViewModel.validate.set("Đăng kí thất bại");
+
         }
-        else{
-              loginViewModel.validate.set("Đăng kí thất bại");
-       }
     }
-    public boolean isValidPassWord(String str){
-        if(str.length()>=6){
+
+    public boolean isValidPassWord() {
+        if (pw.length() < 6)
+        {
+            Toast.makeText(getActivity(),"Password phải lớn hơn 6 kí tự!",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(!pw.equals(confirm))
+        {
+            Toast.makeText(getActivity(),"Password và RepeatPassword không trùng nhau",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else {
             return true;
         }
-        return false;
     }
 
-    public boolean isValidPhone(String str){
-        Pattern ptrn = Pattern.compile("(0/91)?[7-9][0-9]{9}");
-        Matcher match = ptrn.matcher(str);
-        return true;
-    }
+    public boolean isValidPhone(String str) {
+        if(phone.length()<10)
+        {
+            Toast.makeText(getActivity(),"Số điện thoại không hợp lệ",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
 
+    }
 }

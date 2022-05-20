@@ -152,6 +152,7 @@ public class ConversionsFragment extends Fragment {
                             user.setToken(doc.getString(Constants.key_FCM_Token));
                             user.setImage(doc.getString(Constants.key_Image));
                             Log.e("TAG", "onComplete: " + doc.getId());
+                            user.setStatus(doc.getString(Constants.key_Status));
                             user.setId(doc.getId());
                             break;
                         }
@@ -160,13 +161,10 @@ public class ConversionsFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constants.key_Receiver_Id,user);
                     navigation.navigate(R.id.action_conversionsFragment_to_fragmentSceneChat,bundle);
-
                 }
             }
 
         });
-
-//        return friend.get(0);
     }
 
 

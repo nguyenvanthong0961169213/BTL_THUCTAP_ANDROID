@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.bt_android_thuctap.R;
 import com.example.bt_android_thuctap.common.Common;
@@ -75,7 +76,11 @@ public class Fragment_Changer_Password extends Fragment {
             }
         });
     }
-
+    private void cancel() {
+        FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame,new HomeAppFragment());
+        transaction.commit();
+    }
     private void showToast(String message) {
         Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
@@ -127,6 +132,7 @@ public class Fragment_Changer_Password extends Fragment {
             if(Validation()){
                 updatePassword();
                 Log.i("newpass",newPassword);
+                cancel();
             }
         });
     }

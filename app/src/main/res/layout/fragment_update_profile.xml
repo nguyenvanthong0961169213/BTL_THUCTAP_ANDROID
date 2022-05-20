@@ -24,7 +24,7 @@
             android:background="#DCD4E4"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_userprofile"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -32,12 +32,11 @@
                 android:layout_marginTop="20dp"
                 android:src="@drawable/ic_user" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:gravity="center"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="20dp"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/image_camera_update"
@@ -46,10 +45,10 @@
                     android:src="@drawable/addpic1" />
 
                 <ImageView
-                    android:layout_marginLeft="20dp"
                     android:id="@+id/image_photo_update"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginLeft="20dp"
                     android:src="@drawable/addpic2" />
             </LinearLayout>
 
@@ -79,7 +78,8 @@
             android:layout_below="@id/imageDetails"
             android:orientation="vertical"
             android:paddingLeft="20dp"
-            android:paddingEnd="20dp">
+            android:paddingEnd="20dp"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -87,7 +87,8 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center|left"
-                android:text="Name"
+                android:text="Name:"
+                android:textSize="18dp"
                 android:textColor="#C82121" />
 
             <EditText
@@ -105,7 +106,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/Name"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/textView2"
@@ -115,7 +117,8 @@
                 android:gravity="center|left"
                 android:paddingLeft="20dp"
                 android:text="Gender: "
-                android:textColor="#DC1414" />
+                android:textColor="#DC1414"
+                android:textSize="18dp"/>
 
             <RadioGroup
                 android:layout_width="298dp"
@@ -156,8 +159,9 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center|left"
-                android:text="Phone"
-                android:textColor="#C82121" />
+                android:text="Phone:"
+                android:textColor="#C82121"
+                android:textSize="18dp"/>
 
             <EditText
                 android:id="@+id/textPhoneUpdate"
@@ -166,31 +170,40 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Phone number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/Phone"
+            android:layout_marginTop="0dp"
             android:orientation="horizontal"
             android:padding="20dp">
 
             <Button
                 android:id="@+id/btnUpdate"
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
                 android:layout_weight="1"
-                android:text="Update" />
+                android:background="@drawable/btn_signin"
+                android:text="Update"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btnCancel"
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|right"
+                android:layout_marginLeft="30dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:background="@drawable/btn_signin"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </RelativeLayout>

@@ -19,8 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.bt_android_thuctap.R;
+import com.example.bt_android_thuctap.SignUpFragment;
 import com.example.bt_android_thuctap.common.Common;
 import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.databinding.FragmentUpdateProfileBinding;
@@ -82,8 +84,14 @@ public class Fragment_Update_Profile extends Fragment {
         fragmentUpdateProfileBinding.btnUpdate.setOnClickListener(v -> {
             if (isValidSignUpDetail()) {
                 update();
+                cancel();
+            }
+            else
+            {
+                cancel();
             }
         });
+        fragmentUpdateProfileBinding.btnCancel.setOnClickListener(view -> cancel());
         fragmentUpdateProfileBinding.imagePhotoUpdate.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
@@ -94,6 +102,12 @@ public class Fragment_Update_Profile extends Fragment {
         fragmentUpdateProfileBinding.imageCameraUpdate.setOnClickListener(view -> {
             askCameraPermission();
         });
+    }
+
+    private void cancel() {
+        FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame,new HomeAppFragment());
+        transaction.commit();
     }
 
     private void askCameraPermission() {
@@ -129,6 +143,7 @@ public class Fragment_Update_Profile extends Fragment {
                 InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 fragmentUpdateProfileBinding.imgUserprofile.setImageBitmap(bitmap);
+                encodeImage=Convert.bitmapToBase64(bitmap);
             }
             catch (FileNotFoundException e){
                 e.printStackTrace();
@@ -138,6 +153,7 @@ public class Fragment_Update_Profile extends Fragment {
         if(requestCode == CAMERA_REQUEST_CODE){
             bitmap =(Bitmap) data.getExtras().get("data");
             fragmentUpdateProfileBinding.imgUserprofile.setImageBitmap(bitmap);
+            encodeImage=Convert.bitmapToBase64(bitmap);
         }
     }
 
@@ -154,25 +170,34 @@ public class Fragment_Update_Profile extends Fragment {
             return false;
         } else {
             return true;
-
         }
     }
 
 
     private void update() {
-        encodeImage = Convert.bitmapToBase64(bitmap);
+        if(encodeImage!=null)
+        {
+            encodeImage = Convert.bitmapToBase64(bitmap);
+        }
+
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         String name = fragmentUpdateProfileBinding.textNameUpdate.getText().toString();
         String phone = fragmentUpdateProfileBinding.textPhoneUpdate.getText().toString();
         HashMap<String, Object> user = new HashMap<>();
-        user.put(Constants.key_Image, encodeImage);
+        if(encodeImage!=null)
+        {
+            user.put(Constants.key_Image, encodeImage);
+        }
         user.put(Constants.key_Name,name);
         user.put(Constants.key_Phone,phone);
         Log.d("Test",""+preferenceManager.getString(Constants.key_UserId));
         database.collection(Constants.key_User_Col).document(preferenceManager.getString(Constants.key_UserId)).update(user).addOnSuccessListener(documentReference -> {
-            preferenceManager.putString(Constants.key_Image, encodeImage);
+           if(encodeImage!=null)
+           {
+               preferenceManager.putString(Constants.key_Image, encodeImage);
+           }
             preferenceManager.putString(Constants.key_Name, name);
-            preferenceManager.putString(Constants.key_Image, phone);
+            preferenceManager.putString(Constants.key_Phone, phone);
         }).addOnFailureListener(e -> {
             showToast(e.getMessage());
         });

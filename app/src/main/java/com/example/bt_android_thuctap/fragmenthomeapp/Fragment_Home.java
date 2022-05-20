@@ -50,10 +50,14 @@ public class Fragment_Home extends Fragment {
         preferenceManager = new PreferenceManager(getActivity().getApplicationContext());
         fragmentHomeBinding.rectanglesUser.setVisibility(View.VISIBLE);
         navigation = NavHostFragment.findNavController(this);
-        LoadingData();
-        userAdapter = new UserAdapter(data,this);
         fragmentHomeBinding.btnPhonebook.setOnClickListener(v -> goConversions());
         return mview;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        LoadingData();
+        userAdapter = new UserAdapter(data,this);
     }
 
     private void goConversions() {

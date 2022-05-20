@@ -15,9 +15,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.bt_android_thuctap.common.Convert;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Changer_Password;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Home;
 import com.example.bt_android_thuctap.fragmenthomeapp.Fragment_Update_Profile;
@@ -35,6 +38,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Layout_Home extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     PreferenceManager preferenceManager ;
     private DrawerLayout drawerLayout;
@@ -44,6 +49,8 @@ public class Layout_Home extends BaseActivity implements NavigationView.OnNaviga
 //    private static final int FRAGMENT_CHAT_SENSE=3;
     DocumentReference documentReference;
     FirebaseFirestore firebaseFirestore;
+    CircleImageView circleImageView;
+    TextView textView;
 
     private int currentFragment=FRAGMENT_HOME;
 
@@ -70,6 +77,12 @@ public class Layout_Home extends BaseActivity implements NavigationView.OnNaviga
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView=findViewById(R.id.navigation_view);
+        View headerview =navigationView.getHeaderView(0);
+        circleImageView =(CircleImageView)headerview.findViewById(R.id.avatarUser);
+        textView  = (TextView)headerview.findViewById(R.id.nameUser);
+        circleImageView.setImageBitmap(Convert.base64ToBitmap(preferenceManager.getString(Constants.key_Image)));
+        textView.setText(preferenceManager.getString(Constants.key_Name));
+        navigationView.setNavigationItemSelectedListener(this);
         navigationView.setNavigationItemSelectedListener(this);
 
         replaceFragment(new HomeAppFragment());
